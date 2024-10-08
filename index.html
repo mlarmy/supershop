@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/images/logo_png.png" type="image/x-icon" />
+    <!-- FOnt awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="config.js"></script>
+    <link rel="stylesheet" href="/styles/index.css" />
+    <link rel="stylesheet" href="/styles/products_list.css" />
+    <!-- Aos animation css link= -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Bootstrap css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <title>SuperShop - Buy & Sell Products Online</title>
+  </head>
+  <body class="body">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid">
+        <!-- Logo Image -->
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img
+            src="images/logo_png.png"
+            alt="Logo"
+            class="d-inline-block"
+            style="width: 40px; height: auto"
+          />
+          <p id="name" class="mb-0 ms-2"></p>
+          <!-- Use ms-2 for left margin on smaller screens -->
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Become a Seller
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-layer-group"></i> Dashboard</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-user-plus"></i> Register for
+                    Seller</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Contact
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-headset"></i> Help Center</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-user-secret"></i> About us</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-crown"></i> Become a SuperShop
+                    partnership</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Account
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" id="order-btn"
+                    ><i class="fa-brands fa-shopify"></i> My Orders</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" id="my_profile_btn"
+                    ><i class="fa-regular fa-user"></i> MY Profile</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item" id="open-user-login">
+              <a class="nav-link active" aria-current="page">Login</a>
+            </li>
+          </ul>
+          <i id="info" class="fa-solid fa-circle-info"></i>
+        </div>
+      </div>
+    </nav>
+
+    <!-- button for scroll to top -->
+    <i id="scroll-up-btn" class="fa-solid fa-chevron-up"></i>
+
+    <section class="search-product">
+      <div class="container">
+        <div class="slow_gun">
+          <i class="fa-solid fa-crown"></i>
+          <h3 id="welcome-title">Welcome to our online SuperShop!</h3>
+        </div>
+        <form accept="submit" onsubmit="return false;">
+          <!-- Prevent form submission -->
+          <label for="search" class="visually-hidden"
+            >Search for products</label
+          >
+          <!-- Accessible label -->
+          <input
+            id="search"
+            name="search"
+            type="search"
+            placeholder="Search for products"
+            aria-label="Search for products"
+          />
+          <button type="submit" id="searchBtn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="product-list">
+      <div id="products_list_container" class="list-container">
+        <!-- Product cards will be dynamically generated here -->
+      </div>
+    </section>
+
+    <script>
+      // Set the website name by name id
+      document.getElementById("name").innerText = name;
+    </script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        get,
+        set,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const auth = getAuth(app);
+      let isUser = false;
+
+      function show_products() {
+        document.getElementById("products_list_container").innerHTML = ""; // Clear the container
+
+        const productsRef = ref(db, "products/");
+        onValue(productsRef, (snapshot) => {
+          const products = snapshot.val();
+
+          let productsHTML = ""; // Create a variable to hold the HTML string
+
+          for (const product_id in products) {
+            const product = products[product_id];
+
+            // Create product card HTML using template literals
+            let imagesHTML = "";
+            const formattedPrice = product.price.toLocaleString();
+            // Check if product.discount_amount exists before formatting
+            const formattedDiscountAmount3 = product.discount_amount
+              ? product.discount_amount.toLocaleString()
+              : ``; // Default value if discount_amount is undefined
+
+            // Check if images exist
+            if (product.images) {
+              const img = product.images[1];
+              imagesHTML += `<img class="product_image" src="${img}" />`;
+            }
+
+            productsHTML += `
+            <div  class="product_card" data-aos="zoom-in-up">
+                <div class="product_image_container" onclick="handleProductClick('${product_id}')">${imagesHTML}</div>
+                <div class="products_details_container">
+                    <p class="product_title">${product.title}</p>
+                    <div class="product_price_container">
+                        <p class="product_price">${product.currency} ${formattedPrice}</p>
+                        <div class="discount_container">
+                          <p class="discount_amount">${formattedDiscountAmount3}</p>
+                          <p class="product_discount_percentage">-${product.discount_percentage}%</p>
+                        </div>
+                    </div>
+                  <div class="rating_and_share">
+                    <div class="product_rettings_container">
+                      <i id="star-1" class="fa-solid fa-star"></i>
+                      <i id="star-2" class="fa-solid fa-star"></i>
+                      <i id="star-3"class="fa-solid fa-star"></i>
+                      <i id="star-4" class="fa-solid fa-star"></i>
+                      <i id="star-5" class="fa-solid fa-star"></i>
+                      <p class="rettings">(0)</p>
+                    </div>
+                    <div class="share_container">
+                      <div class="dropdown">
+                        <button class="dropbtn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div class="dropdown-content">
+                            <a onClick="likeButtonClick('${product_id}')"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
+                            <a onClick="shareButtonClick('${product_id}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        `;
+          }
+
+          // Inject the generated HTML into the products list container
+          document.getElementById("products_list_container").innerHTML =
+            productsHTML;
+          productCardProcessing();
+        });
+      }
+
+      // Show filtered products based on user's favorite keywords
+      function show_filtered_products(uid) {
+        const keywordsRef = ref(db, `users/${uid}/favourite/keywords`);
+
+        // Get the user's keywords
+        get(keywordsRef)
+          .then((snapshot) => {
+            const keywords = snapshot.val(); // This is the long string in 'keywords' node
+
+            if (keywords) {
+              // Split the keywords string into an array
+              const keywordsArray = keywords
+                .split(",")
+                .map((keyword) => keyword.trim().toLowerCase());
+
+              // Fetch all products
+              const productsRef = ref(db, "products/");
+              onValue(productsRef, (snapshot) => {
+                const products = snapshot.val();
+                let filteredProductsHTML = "";
+
+                // Iterate over all products
+                for (const product_id in products) {
+                  const product = products[product_id];
+
+                  // Convert product title to lowercase for comparison
+                  const productTitleLower = product.title.toLowerCase();
+
+                  // Check if the product title matches any keyword
+                  const matchesKeyword = keywordsArray.some((keyword) =>
+                    productTitleLower.includes(keyword)
+                  );
+
+                  if (matchesKeyword) {
+                    // Create product card HTML using template literals
+                    let imagesHTML = "";
+                    const formattedPrice = product.price.toLocaleString();
+                    // Check if product.discount_amount exists before formatting
+                    const formattedDiscountAmount2 = product.discount_amount
+                      ? product.discount_amount.toLocaleString()
+                      : ``; // Default value if discount_amount is undefined
+
+                    // Check if images exist and create HTML for them
+                    if (product.images) {
+                      const img = product.images[1];
+                      imagesHTML += `<img class="product_image" src="${img}" />`;
+                    }
+
+                    // Create product HTML card
+                    filteredProductsHTML += `
+                                  <div class="product_card" data-aos="zoom-in-up">
+                                      <div class="product_image_container" onclick="handleProductClick('${product_id}')">${imagesHTML}</div>
+                                      <div class="products_details_container">
+                                          <p class="product_title">${product.title}</p>
+                                          <div class="product_price_container">
+                                              <p class="product_price">${product.currency} ${formattedPrice}</p>
+                                              <div class="discount_container">
+                                                <p class="discount_amount">${formattedDiscountAmount2}</p>
+                                                <p class="product_discount_percentage">-${product.discount_percentage}%</p>
+                                              </div>
+                                          </div>
+                                      <div class="rating_and_share">
+                                        <div class="product_rettings_container">
+                                          <i id="star-1" class="fa-solid fa-star"></i>
+                                          <i id="star-2" class="fa-solid fa-star"></i>
+                                          <i id="star-3"class="fa-solid fa-star"></i>
+                                          <i id="star-4" class="fa-solid fa-star"></i>
+                                          <i id="star-5" class="fa-solid fa-star"></i>
+                                          <p class="rettings">(0)</p>
+                                        </div>
+                                        <div class="share_container">
+                                          <div class="dropdown">
+                                            <button class="dropbtn">⋮</button>
+                                            <div class="dropdown-content">
+                                                <a onClick="likeButtonClick('${product_id}')"><i class="fa-regular fa-heart"></i> Like</a>
+                                                <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
+                                                <a onClick="shareButtonClick('${product_id}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  `;
+                  }
+                }
+
+                // Display a message if no products match the keywords
+                if (!filteredProductsHTML) {
+                  filteredProductsHTML = `<p>No products match your favorite keywords.</p>`;
+                }
+
+                // Inject the filtered products HTML into the products list container
+                document.getElementById("products_list_container").innerHTML =
+                  filteredProductsHTML;
+                productCardProcessing();
+              });
+            } else {
+              console.log("No keywords found for user:", uid);
+              // If no keywords, show all products
+              show_products();
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching keywords:", error);
+          });
+      }
+
+      function show_user_or_nonuser_products() {
+        auth.onAuthStateChanged((user) => {
+          if (!user) {
+            show_products();
+          } else {
+            // User is signed in
+            isUser = true;
+            document.getElementById("open-user-login").style.display = "none";
+            show_filtered_products(user.uid);
+          }
+        });
+      }
+      show_user_or_nonuser_products();
+
+      // Function to search for products
+      function searchProducts(searchTerm) {
+        if (isUser) {
+          add_search_as_keywords(searchTerm);
+        }
+        const productsRef = ref(db, "products/");
+        onValue(productsRef, (snapshot) => {
+          const products = snapshot.val();
+          let productsHTML = ``; // Hold the HTML string
+          let hasProducts = false; // Flag to check if any products matched
+
+          for (const product_id in products) {
+            const product = products[product_id];
+
+            // Convert both the search term and keywords to lowercase for case-insensitive search
+            const keywords = product.keywords
+              ? product.keywords.toLowerCase()
+              : "";
+            const searchInTitle = product.title
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase());
+            const searchInKeywords = keywords.includes(
+              searchTerm.toLowerCase()
+            );
+
+            if (searchInTitle || searchInKeywords) {
+              // Generate product card if there's a match
+              hasProducts = true; // Set the flag to true since we found a product
+              let imagesHTML = "";
+              const formattedPrice = product.price.toLocaleString();
+              // Check if product.discount_amount exists before formatting
+              const formattedDiscountAmount = product.discount_amount
+                ? product.discount_amount.toLocaleString()
+                : ``; // Default value if discount_amount is undefined
+
+              if (product.images) {
+                const img = product.images[1];
+                imagesHTML += `<img class="product_image" src="${img}" />`;
+              }
+
+              productsHTML += `
+                          <div class="product_card" data-aos="zoom-in-up">
+                              <div class="product_image_container" onclick="handleProductClick('${product_id}')">${imagesHTML}</div>
+                              <div class="products_details_container">
+                                  <p class="product_title">${product.title}</p>
+                                  <div class="product_price_container">
+                                    <p class="product_price">${product.currency} ${formattedPrice}</p>
+                                    <div class="discount_container">
+                                      <p class="discount_amount">${formattedDiscountAmount}</p>
+                                      <p class="product_discount_percentage">-${product.discount_percentage}%</p>
+                                    </div>
+                                  </div>
+                                  <div class="rating_and_share">
+                                    <div class="product_rettings_container">
+                                      <i id="star-1" class="fa-solid fa-star"></i>
+                                      <i id="star-2" class="fa-solid fa-star"></i>
+                                      <i id="star-3"class="fa-solid fa-star"></i>
+                                      <i id="star-4" class="fa-solid fa-star"></i>
+                                      <i id="star-5" class="fa-solid fa-star"></i>
+                                      <p class="rettings">(0)</p>
+                                    </div>
+                                    <div class="share_container">
+                                      <div class="dropdown">
+                                        <button class="dropbtn">⋮</button>
+                                        <div class="dropdown-content">
+                                            <a onClick="likeButtonClick('${product_id}')"><i class="fa-regular fa-heart"></i> Like</a>
+                                            <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
+                                            <a onClick="shareButtonClick('${product_id}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+                      `;
+            }
+          }
+
+          // If no products matched the search term, display the "No products" message
+          if (!hasProducts) {
+            productsHTML += `
+                      <div class="no-products-to-show">
+                          <i class="fa-solid fa-magnifying-glass"></i>
+                          <p>No products found</p>
+                      </div>`;
+          }
+
+          // Inject the filtered products into the container
+          document.getElementById("products_list_container").innerHTML =
+            productsHTML;
+          productCardProcessing();
+        });
+      }
+      function add_search_as_keywords(searchTerm) {
+        const userId = auth.currentUser.uid; // Get the current user's UID
+
+        if (userId) {
+          const keywordsRef = ref(db, `users/${userId}/favourite/keywords`);
+
+          get(keywordsRef)
+            .then((snapshot) => {
+              let keywords_value = snapshot.val(); // This is the long string in 'keywords' node
+
+              // Initialize keywords_value if it is null (first time)
+              if (keywords_value === null) {
+                keywords_value = "";
+              }
+
+              // Prepare the new keywords string
+              const new_keywordsData = keywords_value
+                ? `${keywords_value}, ${searchTerm}`
+                : searchTerm;
+
+              // Use set() to replace the keywords value directly
+              set(keywordsRef, new_keywordsData)
+                .then(() => {
+                  console.log("Keywords updated successfully.");
+                })
+                .catch((error) => {
+                  console.error("Error updating keywords:", error);
+                });
+            })
+            .catch((error) => {
+              console.error("Error fetching keywords:", error);
+            });
+        } else {
+          console.error("No user is currently logged in.");
+        }
+      }
+      // Listen for search button click
+      document
+        .getElementById("searchBtn")
+        .addEventListener("click", function (e) {
+          handleSearch(e);
+        });
+      // Listen for search button click
+      document
+        .getElementById("searchBtn")
+        .addEventListener("click", function (e) {
+          handleSearch(e);
+        });
+
+      // Listen for Enter key press in the search input field
+      document
+        .getElementById("search")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            handleSearch(e);
+          }
+        });
+
+      // Main function to handle the search logic
+      function handleSearch(e) {
+        e.preventDefault(); // Prevent default form submission (or other default behavior)
+
+        const searchTerm = document.getElementById("search").value.trim();
+
+        if (searchTerm) {
+          searchProducts(searchTerm); // If search term exists, perform the search
+        } else {
+          show_user_or_nonuser_products();
+        }
+      }
+
+      // Show welcome title
+      function showWelcomeTitle() {
+        const welRef = ref(db, "admin/welcome_title");
+        onValue(welRef, (snapshot) => {
+          const welcomeTitle = snapshot.val();
+          document.getElementById("welcome-title").innerText = welcomeTitle;
+        });
+      }
+      showWelcomeTitle();
+
+      // Function to get visitor IP and save to Firebase
+      async function saveVisitorInfo() {
+        try {
+          // Get visitor's IP address
+          const ipResponse = await fetch("https://api.ipify.org?format=json");
+          const ipData = await ipResponse.json();
+          const visitorIP = ipData.ip;
+
+          // Replace dots in the IP address with underscores
+          const safeVisitorIP = visitorIP.replace(/\./g, "_"); // Replace '.' with '_'
+
+          // Get visitor's geolocation
+          const geoResponse = await fetch(
+            `https://ipapi.co/${visitorIP}/json/`
+          );
+          const geoData = await geoResponse.json();
+
+          // Gather visitor details
+          const visitorData = {
+            ip: visitorIP,
+            country: geoData.country_name || "Unknown",
+            region: geoData.region || "Unknown",
+            city: geoData.city || "Unknown",
+            latitude: geoData.latitude || null,
+            longitude: geoData.longitude || null,
+            userAgent: navigator.userAgent,
+            language: navigator.language || navigator.userLanguage,
+            referrer: document.referrer || "Direct",
+            screenResolution: `${window.screen.width}x${window.screen.height}`,
+            timestamp: new Date().toISOString(),
+          };
+
+          // Save the visitor details to Firebase using the modified IP address
+          const visitorRef = ref(db, "/visitors/" + safeVisitorIP);
+          await set(visitorRef, visitorData);
+        } catch (error) {
+          console.error("Error saving visitor information:", error);
+        }
+      }
+      saveVisitorInfo();
+
+      // Open user login page
+      function openLoginPage() {
+        auth.onAuthStateChanged((user) => {
+          if (!user) {
+            window.location.href = "/templates/login.html";
+          }
+        });
+      }
+      document
+        .getElementById("open-user-login")
+        .addEventListener("click", () => {
+          openLoginPage();
+        });
+
+      //  Open my profile page
+      function openProfilePage() {
+        if (isUser) {
+          window.location.href = "/templates/my_profile.html";
+        } else {
+          window.location.href = "/templates/login.html";
+        }
+      }
+      document
+        .getElementById("my_profile_btn")
+        .addEventListener("click", () => {
+          openProfilePage();
+        });
+
+      //  Open my profile page
+      function openOrderPage() {
+        if (isUser) {
+          window.location.href = "/templates/order.html";
+        } else {
+          window.location.href = "/templates/login.html";
+        }
+      }
+      document.getElementById("order-btn").addEventListener("click", () => {
+        openOrderPage();
+      });
+    </script>
+
+    <!-- script for handle product card -->
+    <script src="/js/product_missing_info.js"></script>
+
+    <!-- Aos animation on scroll -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        offset: 100,
+        duration: 500,
+      });
+
+      // scroll to top logic
+      // Get the button element
+      const scrollToTopBtn = document.getElementById("scroll-up-btn");
+
+      // Show the button when the user scrolls down 100px from the top
+      window.onscroll = function () {
+        if (
+          document.body.scrollTop > 100 ||
+          document.documentElement.scrollTop > 300
+        ) {
+          scrollToTopBtn.style.display = "block";
+        } else {
+          scrollToTopBtn.style.display = "none";
+        }
+      };
+
+      // Scroll the page back to the top when the button is clicked
+      scrollToTopBtn.onclick = function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+    </script>
+
+    <!-- Bootstrap js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+      integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

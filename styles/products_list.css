@@ -1,0 +1,227 @@
+:root {
+    --color-background: #fff;
+    --color-primary: #F36944;
+    --color-base: #FEC92B;
+    --color-sky: #74C0FC;
+    --color-green-gray: #63E6BE;
+    --color-pink-gray: #E599F7;
+    --text-black-color: #000;
+    --text-white-color: #fff;
+    --text-gray-color: rgb(59, 59, 59);
+    --logo-size: 50px;
+    --name-size: 20px;
+    --navber-height: 60px;
+    --menu-item-font-size: 15px;
+    --left-right-padding-size: 10vw;
+    --primary-border-radius: 10px;
+    --color-rettings: rgba(128, 128, 128, 0.493);
+    --color-rettings-star: #f3c444;
+}
+
+#products_list_container {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    flex-wrap: wrap; /* Ensure products wrap into the next row if screen is too small */
+    justify-content: center;
+    align-items: flex-start; /* Align cards to the top, allowing them to have different heights */
+}
+
+.product_card {
+    position: relative;
+    flex-basis: 250px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    border-radius: var(--primary-border-radius);
+    max-width: 250px;
+    overflow: hidden;
+    background-color: #fff;
+    border: 2px solid transparent;
+}
+.product_card:hover {
+    border: 2px solid #ececec;
+}
+
+.product_image_container {
+    cursor: pointer;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: auto;
+    border-bottom: 1px solid rgba(197, 197, 197, 0.233);
+}
+
+.product_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.products_details_container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligns items to the top */
+    height: 100%;
+}
+
+.product_title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Clamp to 2 lines */
+    line-height: 1.1;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+}
+
+.product_price_container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0;
+    margin-bottom: 0; /* Remove any margin */
+}
+
+
+.product_price {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    color: #F36944;
+}
+
+.discount_container {
+    display: flex;
+    gap: 5px;
+}
+
+.discount_container p {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+.discount_amount {
+    text-decoration: line-through;
+    color: var(--color-rettings);
+    margin: 0;
+}
+
+.product_rettings_container {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-top: 5px; /* Reduce margin to remove space */
+}
+
+.product_rettings_container i {
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+    color: var(--color-rettings-star);
+}
+
+.rettings {
+    margin: 0;
+    padding: 0;
+    color: var(--color-rettings);
+    font-weight: 300;
+    font-size: 0.8rem;
+}
+
+.rating_and_share {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#share-button {
+    cursor: pointer;
+    color: rgb(73, 73, 73);
+}
+
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}
+
+/* # dot drop down */
+/* Basic styles for the dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    font-weight: 900;
+}
+
+/* Dropdown menu (initially hidden and prepared for transition) */
+.dropdown-content {
+    display: block; /* Always keep block to apply height/opacity transitions */
+    opacity: 0;  /* Invisible by default */
+    visibility: hidden; /* Ensure it doesn't block clicks when hidden */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: -120px; /* Dropdown positioned above */
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+    cursor: pointer;
+    
+    /* Transition property for fade-in effect */
+    transition: opacity 1s ease, visibility 0.3s ease;
+}
+
+/* Dropdown links */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ff565623;
+}
+.dropdown-content a:hover i {
+    color: #ff27279f;
+}
+
+/* Show the dropdown with a fade-in effect */
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+@media screen and (max-width: 540px) {
+    .product_card {
+        flex-basis: 150px;
+        max-width: 200px;
+    }
+}
+
+@media screen and (max-width: 340px) {
+    .product_card {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
