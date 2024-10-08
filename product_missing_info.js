@@ -18,7 +18,7 @@ function productCardProcessing() {
 
 // Handle onclick card 
 function handleProductClick(productId) {
-    window.location.href = `/templates/show_product_details.html?productId=${productId}`;
+    window.location.href = `show_product_details.html?productId=${productId}`;
 }
 
 // Share button click from card
@@ -26,7 +26,7 @@ function shareButtonClick(productId) {
     if (navigator.share) {
         navigator.share({
             title: 'SuperShop Product!',
-            url: `/templates/show_product_details.html?productId=${productId}`,
+            url: `show_product_details.html?productId=${productId}`,
             text: 'Share this amazing product on your social media!'
         })
         .then(() => {
@@ -36,7 +36,7 @@ function shareButtonClick(productId) {
             console.error('Error sharing:', error);
         });
     } else {
-        const shareUrl = `${window.location.origin}/templates/show_product_details.html?productId=${productId}`;
+        const shareUrl = `${window.location.origin}show_product_details.html?productId=${productId}`;
         const tempInput = document.createElement('textarea');
         tempInput.value = shareUrl;
         document.body.appendChild(tempInput);
