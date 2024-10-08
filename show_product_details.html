@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/images/logo_png.png" type="image/x-icon" />
+    <script src="/config.js"></script>
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Product Details</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+      :root {
+        --color-background: #fff;
+        --color-primary: #f36944;
+        --color-base: #fec92b;
+        --color-sky: #74c0fc;
+        --color-green-gray: #63e6be;
+        --color-pink-gray: #e599f7;
+        --text-black-color: #000;
+        --text-white-color: #fff;
+        --text-gray-color: rgb(59, 59, 59);
+        --logo-size: 50px;
+        --name-size: 20px;
+        --navber-height: 60px;
+        --mneu-item-font-size: 15px;
+        --left-right-padding-size: 15vw;
+        --primary-border-radius: 10px;
+        --background-base-color: #74c1fc15;
+      }
+
+      * {
+        padding: 0%;
+        margin: 0%;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        padding: 20px var(--left-right-padding-size);
+        background-color: var(--background-base-color);
+      }
+      #details-container {
+        width: 100%;
+        border-radius: 0%;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: var(--color-background);
+        padding: 20px;
+      }
+      #product-image-container {
+        width: 400px;
+        height: 250px;
+        overflow-y: hidden;
+        overflow-x: auto;
+        display: flex;
+        border-radius: var(--primary-border-radius);
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+      #product-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #productDetails {
+        width: 60%;
+      }
+      #product-title {
+        font-size: 22px;
+        color: var(--text-black-color);
+        text-transform: capitalize;
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+      #description-container {
+        padding: 20px;
+        background-color: var(--color-background);
+        margin-top: 30px;
+        border-radius: var(--primary-border-radius);
+      }
+      #description-container h2 {
+        font-weight: 400;
+        margin-bottom: 10px;
+        color: #74c0fc;
+      }
+      #product-description {
+        font-size: 16px;
+        color: var(--text-gray-color);
+        opacity: 0.8;
+        line-height: 1.36;
+      }
+      #product-price-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      #discount-container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      #product-discouint-percentage {
+        font-size: 14px;
+      }
+      #product-discount-amount {
+        margin: 0;
+        padding: 0;
+        text-decoration: line-through;
+        color: gray;
+        opacity: 0.5;
+      }
+      #product-price {
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        color: var(--text-black-color);
+        margin-bottom: 10px;
+        color: #f36944;
+      }
+      #ratings-container {
+        display: none;
+        gap: 5px;
+      }
+      #ratings-container i{
+        color: #f3ca44;
+      }
+      #ratings-count{
+            color: gray;
+            margin-bottom: 20px;
+      }
+      #delivery-option, #free-delivery-place {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(224, 224, 224, 0.267);
+        padding: 10px;
+        border-radius: var(--primary-border-radius);
+      }
+      #free-delivery-place {
+        background-color: transparent;
+        padding-left: 0;
+      }
+      #delivery-option-item{
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      #standard-delivery {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      #gray-text {
+        color: gray;
+        opacity: 0.5;
+      }
+      #delivery-option-title {
+        color: gray;
+      }
+      #standard-delivery-option-place-charge {
+        color: #f36944;
+      }
+      #return-policy {
+        margin-top: 20px;
+        display: none;
+      }
+      #return-policy-title {
+        font-size: 16px;
+        color: gray;
+        margin-bottom: 10px;
+      }
+      #return-days {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+      #return-policy-content {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      #policy-content {
+        display: flex;
+        gap: 5px;
+      }
+      #product-uploader {
+        margin-top: 20px;
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgba(224, 224, 224, 0.267);
+        padding: 20px;
+        border-radius: var(--primary-border-radius);
+      }
+      #chat-with-uploader {
+        display: flex;
+        gap: 5px;
+        color: #74c0fc;
+        cursor: pointer;
+      }
+      #seller-verification-container {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 3px;
+      }
+      #seller-name-with-badge img {
+        width: 18px;
+      }
+      #seller-name-with-badge {
+        display: flex;
+        gap: 5px;
+      }
+      #verify-status {
+        color: #47afff;
+      }
+      #place-order-container {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 20px;
+      }
+      #place-order-container button {
+        width: 100%;
+        background-color: var(--color-primary);
+        color: var(--text-white-color);
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        border: none;
+        font-size: 16px;
+      }#place-order-container button:hover {
+        opacity: 0.8;
+      }
+      #delivery-option-info-container {
+        display: flex;
+        justify-content: space-between;
+      }
+      #free-delivery-place-ocntainer {
+        display: none;
+        align-items: center;
+        gap: 10px;
+      }
+      #delivery-optoin-info {
+        cursor: pointer;
+        margin-top: 5px;
+        margin-right: 10px;
+        background-color: rgba(161, 161, 161, 0.616);
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #777;
+        font-size: 10px;
+      }
+      #product-stock {
+        margin-top: 20px;
+        display: none;
+        flex-direction: column;
+      }
+      #stock-title-p{
+        color: gray;
+        margin-bottom: 10px;
+      }
+      #stock-status-p {
+        display: none;
+        gap: 5px;
+      }
+      #out-of-stock {
+        display: none;
+        gap: 5px;
+      }
+      #product-ratings-container {
+        background-color: var(--color-background);
+        padding: 20px;
+        margin-top: 30px;
+        border-top-left-radius: var(--primary-border-radius);
+        border-top-right-radius: var(--primary-border-radius);
+        display: none;
+      }
+
+
+      @media screen and (max-width: 850px) {
+        body{
+            padding: 20px 5vw;
+        }
+      }
+
+      @media screen and (max-width: 600px) {
+        body {
+          padding: 0;
+        }
+        #details-container {
+          padding: 0;
+        }
+        #product-image-container {
+          width: 100%;
+          border-radius: 0%;
+          margin-bottom: 0px;
+          margin-right: 0px;
+        }
+        #productDetails {
+          width: 100%;
+          padding: 20px;
+        }
+        #product-title {
+          text-align: start;
+        }
+        #product-image-container{
+            height: 380px;
+        }
+      }
+      @media screen and (max-width: 350px) {
+        #product-image-container{
+            height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="details-container">
+      <div id="product-image-container">
+        <!-- image will be show here -->
+      </div>
+      <div id="productDetails">
+        <div id="product-title-container">
+          <p id="product-title"></p>
+        </div>
+        <div id="product-price-container">
+          <p id="product-price"></p>
+          <div id="discount-container">
+            <p id="product-discount-amount"></p>
+            <p id="product-discouint-percentage"></p>
+          </div>
+        </div>
+        <div id="ratings-container">
+            <i class="fa star1 -solid fa-star"></i>  
+            <i class="fa star2 -solid fa-star"></i>  
+            <i class="fa star3 -solid fa-star"></i>  
+            <i class="fa star4 -solid fa-star"></i>  
+            <i class="fa star5 -solid fa-star"></i>
+            <p id="ratings-count"></p>  
+        </div>
+        <div id="delivery-option">
+            <div id="delivery-option-info-container">
+                <p id="delivery-option-title">Delivery Option</p>
+                <i id="delivery-optoin-info" class="fa-solid fa-question"></i>
+            </div>
+            <div id="delivery-option-item">
+              <div id="free-delivery-place-ocntainer">
+                <i id="free-delivery-place-location-iocn" class="fa-solid fa-location-dot"></i>
+                <div id="free-delivery-place">
+                    <p id="delivery-option-place">Dhaka, Dhaka North, Baliati</p>
+                    <p>Free delivery</p>
+                </div>
+              </div>
+                <div id="standard-delivery">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                    <div id="standard-delivery-place">
+                        <p id="standard-delivery-option-place">Standard Delivery</p>
+                        <p id="gray-text">Guaranteed within <span id="delivery-days"></span> days - <span id="standard-delivery-option-place-charge"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="return-policy">
+            <p id="return-policy-title">Return Policy:</p>
+            <div id="return-days">
+                <i class="fa-solid fa-rotate-left"></i>
+                <p id="return-days"><span id="day-of-return"></span> Days Return</p>
+            </div>
+            <div id="return-policy-content">
+                <div id="policy-content">
+                    <i class="fa-solid fa-handcuffs"></i>
+                    <p>Policy:</p>
+                </div>
+                <p id="return-policy-content-p"></p>
+            </div>
+        </div>
+        <div id="product-stock">
+          <div id="stock-title">
+            <p id="stock-title-p">Stock: </p>
+          </div>
+          <div id="stock-content">
+            <p id="out-of-stock"><i class="fa-solid fa-plug-circle-xmark"></i><span id="out-of-stock-status-span">Out Of Stock</span></p>
+            <p id="stock-status-p"><i class="fa-brands fa-stack-overflow"></i><span id="stock-status-span">In Stock</span></p>
+          </div>
+        </div>
+        <div id="product-uploader">
+            <div id="product-uploader-name">
+                <div id="seller-verification-container">
+                    <p id="verify-status">Verified seller</p>
+                </div>
+                <div id="seller-name-with-badge">
+                  <p id="uploader-name"></p>
+                  <img src="/images/verified_badge.png" alt="badge">
+                </div>
+            </div>
+            <div id="chat-with-uploader">
+                <i class="fa-brands fa-rocketchat"></i>
+                <p>Chat Now</p>
+            </div>
+        </div>
+        <div id="place-order-container">
+            <button id="place-order-button">Place Order</button>
+        </div>
+      </div>
+    </div>
+    <div id="description-container">
+      <h2>Product Description</h2>
+      <p id="product-description"></p>
+    </div>
+    <div id="product-ratings-container">
+      <h2>Ratings & Reviews</h2>
+      <div id="ratings-overview-container">
+        <div id="average-rating-container">
+          <p id="average-rating"></p>
+          <div id="average-rating-star">
+            <i class="fa star1 -solid fa-star"></i>
+            <i class="fa star2 -solid fa-star"></i>
+            <i class="fa star3 -solid fa-star"></i>
+            <i class="fa star4 -solid fa-star"></i>
+            <i class="fa star5 -solid fa-star"></i>
+          </div>
+          <p id="reviews-ratings-count"></p>
+        </div>
+        <div id="ratings-distribution-container">
+          <div id="ratings-distribution-star">
+
+          </div>
+          <div id="ratings-distribution-bar">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/js/fetch_product_info_by_id.js"></script>
+  </body>
+</html>
