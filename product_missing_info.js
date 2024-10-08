@@ -17,17 +17,18 @@ function productCardProcessing() {
 }
 
 // Handle onclick card 
-function handleProductClick(productId) {
-    window.location.href = `show_product_details.html?productId=${productId}`;
-}
-
-// Share button click from card
-function shareButtonClick(productId) {
+function shareButtonClick(productId, productTitle) {
     if (navigator.share) {
+        // Mobile share functionality using the Web Share API
         navigator.share({
-            title: 'SuperShop Product!',
-            url: `show_product_details.html?productId=${productId}`,
-            text: 'Share this amazing product on your social media!'
+            title: `✨ Check out ${productTitle}! ✨`,
+            url: `/templates/show_product_details.html?productId=${productId}`,
+            text: `
+            🚀 I found this amazing product: 
+            📦 **${productTitle}**  
+            🎉 You should check it out!  
+            🔗 [View Product](/templates/show_product_details.html?productId=${productId})
+            `
         })
         .then(() => {
             console.log('Product shared successfully!');
@@ -36,7 +37,8 @@ function shareButtonClick(productId) {
             console.error('Error sharing:', error);
         });
     } else {
-        const shareUrl = `${window.location.origin}show_product_details.html?productId=${productId}`;
+        // Fallback for non-supporting browsers (copy to clipboard)
+        const shareUrl = `${window.location.origin}/templates/show_product_details.html?productId=${productId}`;
         const tempInput = document.createElement('textarea');
         tempInput.value = shareUrl;
         document.body.appendChild(tempInput);
@@ -44,4 +46,9 @@ function shareButtonClick(productId) {
         document.execCommand('copy');
         document.body.removeChild(tempInput);
     }
+}
+
+// Handle save button click
+function saveButtonClick(product_id){
+    alert("Save button clicked!");
 }
