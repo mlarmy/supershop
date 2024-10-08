@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="/images/logo_png.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="logo_png.png" type="image/x-icon" />
     <!-- FOnt awesome -->
     <link
       rel="stylesheet"
@@ -13,8 +13,8 @@
       referrerpolicy="no-referrer"
     />
     <script src="config.js"></script>
-    <link rel="stylesheet" href="/styles/index.css" />
-    <link rel="stylesheet" href="/styles/products_list.css" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="products_list.css" />
     <!-- Aos animation css link= -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Bootstrap css -->
@@ -32,7 +32,7 @@
         <!-- Logo Image -->
         <a class="navbar-brand d-flex align-items-center" href="#">
           <img
-            src="images/logo_png.png"
+            src="logo_png.png"
             alt="Logo"
             class="d-inline-block"
             style="width: 40px; height: auto"
@@ -636,9 +636,9 @@
       //  Open my profile page
       function openOrderPage() {
         if (isUser) {
-          window.location.href = "/templates/order.html";
+          window.location.href = "order.html";
         } else {
-          window.location.href = "/templates/login.html";
+          window.location.href = "login.html";
         }
       }
       document.getElementById("order-btn").addEventListener("click", () => {
@@ -647,7 +647,7 @@
     </script>
 
     <!-- script for handle product card -->
-    <script src="/js/product_missing_info.js"></script>
+    <script src="product_missing_info.js"></script>
 
     <!-- Aos animation on scroll -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
