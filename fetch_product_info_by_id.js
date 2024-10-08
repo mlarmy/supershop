@@ -60,10 +60,21 @@ function fetchProductDetails(productId) {
           imageContainer.innerHTML = ''; // Clear the container before adding new images
           for (const imgId in product.images) {
             const imgUri = product.images[imgId];
+            const videoUri = product.video;
+
             const imageCreated = document.createElement("img"); // Corrected this line
-            
             imageCreated.src = imgUri;
             imageCreated.classList.add("product-image");
+            imageCreated.id = `image-${imgId}`;
+
+            if(product.video && product.video !== "null"){
+              const video = document.createElement("video");
+              video.src = videoUri;
+              video.controls = true;
+              video.autoplay = true; 
+              imageContainer.appendChild(video);
+            }
+
             imageContainer.appendChild(imageCreated);
           }
         }
@@ -73,7 +84,7 @@ function fetchProductDetails(productId) {
         document.getElementById("product-description").textContent = product.description;
         document.getElementById("product-price").innerText = `${product.currency} ${product.price.toLocaleString()}`;
 
-        if(product.return_policy && product.return_days != 0 && product.return_days > 0){
+        if(product.return_policy && product.return_days !== 0 && product.return_days > 0){
           document.getElementById("day-of-return").textContent = product.return_days;
           document.getElementById("return-policy-content-p").textContent = `${product.return_policy}`;
           document.getElementById("return-policy").style.display = "block";
@@ -92,15 +103,15 @@ function fetchProductDetails(productId) {
           document.getElementById("delivery-days").textContent = `3`;
         }
 
-        if(product.free_delivery_place){
+        if(product.free_delivery_places && product.free_delivery_places !== "null"){
           document.getElementById("free-delivery-place-ocntainer").style.display = "flex";
-          document.getElementById("delivery-option-place").textContent = `${product.free_delivery_place}`;
+          document.getElementById("delivery-option-place").textContent = `${product.free_delivery_places}`;
         }else{
           document.getElementById("free-delivery-place-ocntainer").style.display = "none";
           document.getElementById("delivery-option-place").textContent = `No free delivery places`;
         }
 
-        if(product.stock && product.stock != 0){
+        if(product.stock && product.stock !== 0){
           document.getElementById("product-stock").style.display = "flex";
           document.getElementById("stock-status-p").style.display = "flex";
           document.getElementById("out-of-stock").style.display = "none";
@@ -127,9 +138,15 @@ function fetchProductDetails(productId) {
           document.getElementById("product-ratings-container").style.display = "none";
         }
 
-        if(product.discount_percentage != 0 && product.discount_amount != 0){
+        if(product.discount_percentage !== 0 && product.discount_amount !== 0){
             document.getElementById("product-discouint-percentage").textContent = `-${product.discount_percentage}%`;
             document.getElementById("product-discount-amount").textContent = `${product.discount_amount.toLocaleString()}`;
+        }
+        if(product.size && product.size !== "null"){
+          document.getElementById("product-size-container").style.display = "flex";
+          document.getElementById("product-size").textContent = `${product.size}`;
+        }else{
+          document.getElementById("product-size-container").style.display = "none";
         }
       } else {
         console.error("Product not found");
