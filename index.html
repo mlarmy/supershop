@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="logo_png.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="/images/logo_png.png" type="image/x-icon" />
     <!-- FOnt awesome -->
     <link
       rel="stylesheet"
@@ -13,8 +13,8 @@
       referrerpolicy="no-referrer"
     />
     <script src="config.js"></script>
-    <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="products_list.css" />
+    <link rel="stylesheet" href="/styles/index.css" />
+    <link rel="stylesheet" href="/styles/products_list.css" />
     <!-- Aos animation css link= -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Bootstrap css -->
@@ -32,7 +32,7 @@
         <!-- Logo Image -->
         <a class="navbar-brand d-flex align-items-center" href="#">
           <img
-            src="logo_png.png"
+            src="images/logo_png.png"
             alt="Logo"
             class="d-inline-block"
             style="width: 40px; height: auto"
@@ -249,9 +249,9 @@
                       <div class="dropdown">
                         <button class="dropbtn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                         <div class="dropdown-content">
-                            <a onClick="likeButtonClick('${product_id}')"><i class="fa-regular fa-heart"></i> Like</a>
+                            <a onClick="saveButtonClick('${product_id}')"><i class="fa-regular fa-bookmark"></i></i> Save</a>
                             <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
-                            <a onClick="shareButtonClick('${product_id}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
+                            <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
                         </div>
                     </div>
                     </div>
@@ -342,9 +342,9 @@
                                           <div class="dropdown">
                                             <button class="dropbtn">⋮</button>
                                             <div class="dropdown-content">
-                                                <a onClick="likeButtonClick('${product_id}')"><i class="fa-regular fa-heart"></i> Like</a>
+                                                <a onClick="saveButtonClick('${product_id}')"><i class="fa-regular fa-bookmark"></i></i> Save</a>
                                                 <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
-                                                <a onClick="shareButtonClick('${product_id}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
+                                                <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
                                             </div>
                                         </div>
                                         </div>
@@ -455,9 +455,9 @@
                                       <div class="dropdown">
                                         <button class="dropbtn">⋮</button>
                                         <div class="dropdown-content">
-                                            <a onClick="likeButtonClick('${product_id}')"><i class="fa-regular fa-heart"></i> Like</a>
+                                            <a onClick="saveButtonClick('${product_id}')"><i class="fa-regular fa-bookmark"></i></i> Save</a>
                                             <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
-                                            <a onClick="shareButtonClick('${product_id}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
+                                            <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
                                         </div>
                                     </div>
                                     </div>
@@ -622,9 +622,9 @@
       //  Open my profile page
       function openProfilePage() {
         if (isUser) {
-          window.location.href = "my_profile.html";
+          window.location.href = "/templates/my_profile.html";
         } else {
-          window.location.href = "login.html";
+          window.location.href = "/templates/login.html";
         }
       }
       document
@@ -636,9 +636,9 @@
       //  Open my profile page
       function openOrderPage() {
         if (isUser) {
-          window.location.href = "order.html";
+          window.location.href = "/templates/order.html";
         } else {
-          window.location.href = "login.html";
+          window.location.href = "/templates/login.html";
         }
       }
       document.getElementById("order-btn").addEventListener("click", () => {
@@ -647,7 +647,7 @@
     </script>
 
     <!-- script for handle product card -->
-    <script src="product_missing_info.js"></script>
+    <script src="/js/product_missing_info.js"></script>
 
     <!-- Aos animation on scroll -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
