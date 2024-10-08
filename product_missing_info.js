@@ -27,12 +27,12 @@ function shareButtonClick(productId, productTitle) {
         // Mobile share functionality using the Web Share API
         navigator.share({
             title: `✨ Check out ${productTitle}! ✨`,
-            url: `/templates/show_product_details.html?productId=${productId}`,
+            url: `show_product_details.html?productId=${productId}`,
             text: `
             🚀 I found this amazing product: 
             📦 **${productTitle}**  
             🎉 You should check it out!  
-            🔗 [View Product](/templates/show_product_details.html?productId=${productId})
+            🔗 [View Product] (show_product_details.html?productId=${productId})
             `
         })
         .then(() => {
