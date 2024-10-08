@@ -18,7 +18,7 @@ function productCardProcessing() {
 
 // Function to handle the product click (redirect to the product details page)
 function handleProductClick(productId) {
-    window.location.href = `/templates/show_product_details.html?productId=${productId}`;
+    window.location.href = `show_product_details.html?productId=${productId}`;
 }
 
 // Handle onclick card 
