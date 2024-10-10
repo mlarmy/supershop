@@ -259,8 +259,8 @@
                         <button class="dropbtn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                         <div class="dropdown-content">
                             <a id="saveProduct_${product_id}" onClick="saveButtonClick('${product_id}')"><i id="saveProductIcon" class="fa-regular fa-bookmark"></i></i></a>
-                            <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
-                            <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
+                            <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i></a>
+                            <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i></a>
                         </div>
                     </div>
                     </div>
@@ -274,6 +274,7 @@
           document.getElementById("products_list_container").innerHTML =
             productsHTML;
           productCardProcessing();
+          updateSaveIcons();
         });
       }
 
@@ -352,8 +353,8 @@
                                             <button class="dropbtn">⋮</button>
                                             <div class="dropdown-content">
                                                 <a id="saveProduct_${product_id}" onClick="saveButtonClick('${product_id}')"><i id="saveProductIcon" class="fa-regular fa-bookmark"></i></i></a>
-                                                <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
-                                                <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
+                                                <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i></a>
+                                                <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i></a>
                                             </div>
                                         </div>
                                         </div>
@@ -373,6 +374,7 @@
                 document.getElementById("products_list_container").innerHTML =
                   filteredProductsHTML;
                 productCardProcessing();
+                updateSaveIcons();
               });
             } else {
               console.log("No keywords found for user:", uid);
@@ -465,8 +467,8 @@
                                         <button class="dropbtn">⋮</button>
                                         <div class="dropdown-content">
                                             <a id="saveProduct_${product_id}" onClick="saveButtonClick('${product_id}')"><i id="saveProductIcon" class="fa-regular fa-bookmark"></i></i></a>
-                                            <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
-                                            <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
+                                            <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i></a>
+                                            <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i></a>
                                         </div>
                                     </div>
                                     </div>
@@ -490,6 +492,7 @@
           document.getElementById("products_list_container").innerHTML =
             productsHTML;
           productCardProcessing();
+          updateSaveIcons();
         });
       }
       function add_search_as_keywords(searchTerm) {
