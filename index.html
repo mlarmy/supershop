@@ -273,8 +273,9 @@
           // Inject the generated HTML into the products list container
           document.getElementById("products_list_container").innerHTML =
             productsHTML;
-          updateSaveIcons();
+        
           productCardProcessing();
+          updateSaveIcons();
         });
       }
 
@@ -373,8 +374,9 @@
                 // Inject the filtered products HTML into the products list container
                 document.getElementById("products_list_container").innerHTML =
                   filteredProductsHTML;
-                updateSaveIcons();
+              
                 productCardProcessing();
+                updateSaveIcons();
               });
             } else {
               console.log("No keywords found for user:", uid);
@@ -491,8 +493,9 @@
           // Inject the filtered products into the container
           document.getElementById("products_list_container").innerHTML =
             productsHTML;
-          updateSaveIcons();
+      
           productCardProcessing();
+          updateSaveIcons();
         });
       }
       function add_search_as_keywords(searchTerm) {
