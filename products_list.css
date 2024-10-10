@@ -214,6 +214,11 @@
 }
 
 
+.saved-icon {
+    color: red;
+}
+
+
 @media screen and (max-width: 540px) {
     .product_card {
         flex-basis: 150px;
