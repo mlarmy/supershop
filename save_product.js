@@ -45,7 +45,7 @@ onAuthStateChanged(auth, authStateChanged => {
 // js/save_product.js
 function saveButtonClick(product_id) {
     if (!isUser) {
-        window.location.href = "/templates/login.html";
+        window.location.href = "login.html";
         return;
     }
 
