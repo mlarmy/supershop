@@ -52,8 +52,3 @@ function shareButtonClick(productId, productTitle) {
         document.body.removeChild(tempInput);
     }
 }
-
-// Handle save button click
-function saveButtonClick(product_id){
-    alert("Save button clicked!");
-}
