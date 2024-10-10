@@ -128,6 +128,15 @@
                     ><i class="fa-regular fa-user"></i> MY Profile</a
                   >
                 </li>
+                                <li>
+                  <a class="dropdown-item" id="logOutBtn" style="color: red"
+                    ><i
+                      class="fa-solid fa-right-from-bracket"
+                      style="color: red"
+                    ></i>
+                    LogOut</a
+                  >
+                </li>
               </ul>
             </li>
             <li class="nav-item" id="open-user-login">
@@ -249,7 +258,7 @@
                       <div class="dropdown">
                         <button class="dropbtn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                         <div class="dropdown-content">
-                            <a onClick="saveButtonClick('${product_id}')"><i class="fa-regular fa-bookmark"></i></i> Save</a>
+                            <a id="saveProduct_${product_id}" onClick="saveButtonClick('${product_id}')"><i id="saveProductIcon" class="fa-regular fa-bookmark"></i></i></a>
                             <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
                             <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
                         </div>
@@ -342,7 +351,7 @@
                                           <div class="dropdown">
                                             <button class="dropbtn">⋮</button>
                                             <div class="dropdown-content">
-                                                <a onClick="saveButtonClick('${product_id}')"><i class="fa-regular fa-bookmark"></i></i> Save</a>
+                                                <a id="saveProduct_${product_id}" onClick="saveButtonClick('${product_id}')"><i id="saveProductIcon" class="fa-regular fa-bookmark"></i></i></a>
                                                 <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
                                                 <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
                                             </div>
@@ -455,7 +464,7 @@
                                       <div class="dropdown">
                                         <button class="dropbtn">⋮</button>
                                         <div class="dropdown-content">
-                                            <a onClick="saveButtonClick('${product_id}')"><i class="fa-regular fa-bookmark"></i></i> Save</a>
+                                            <a id="saveProduct_${product_id}" onClick="saveButtonClick('${product_id}')"><i id="saveProductIcon" class="fa-regular fa-bookmark"></i></i></a>
                                             <a onclick="handleProductClick('${product_id}')"><i class="fa-solid fa-cart-plus"></i> Order</a>
                                             <a onClick="shareButtonClick('${product_id}', '${product.title}')"><i class="fa-solid fa-share-from-square"></i> Share</a>
                                         </div>
@@ -644,6 +653,14 @@
       document.getElementById("order-btn").addEventListener("click", () => {
         openOrderPage();
       });
+
+      // Log out
+      function logOut() {
+        auth.signOut().then(() => {
+          window.location.href = "#";
+        });
+      }
+      document.getElementById("logOutBtn").addEventListener("click", logOut);
     </script>
 
     <!-- script for handle product card -->
