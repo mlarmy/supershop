@@ -111,7 +111,7 @@ function updateSaveIcons() {
             if (saveProductIcon) {
                 // If product is saved, show the solid bookmark icon
                 saveProductIcon.classList.remove("fa-regular");
-                saveProductIcon.classList.add("fa-solid");
+                saveProductIcon.classList.add("fa-solid", "saved-icon);
             }
         }
     });
