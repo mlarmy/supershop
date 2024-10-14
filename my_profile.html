@@ -1,11 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuperShop - My Profile</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="logo_png.png" type="image/x-icon" />
+    <script src="config.js"></script>
+    <link rel="stylesheet" href="products_list.css" />
+    <!-- FOnt awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>[name] - My Profile</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+      :root {
+        --color-background: #fff;
+        --color-primary: #f36944;
+        --color-secondary: #4d4dff;
+        --color-base: #fec92b;
+        --color-sky: #74c0fc;
+        --color-green-gray: #63e6be;
+        --color-pink-gray: #e599f7;
+        --text-black-color: #000;
+        --text-white-color: #fff;
+        --text-gray-color: rgb(59, 59, 59);
+        --logo-size: 50px;
+        --name-size: 20px;
+        --navber-height: 60px;
+        --menu-item-font-size: 15px;
+        --left-right-padding-size: 10vw;
+        --primary-border-radius: 10px;
+        --background-base-color: #f8f9fa;
+        --nav-height: 60px;
+        --nav-color: var(--color-primary);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--background-base-color);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 100vh;
+      }
+      .profile_container {
+        width: 100%;
+        padding-left: var(--left-right-padding-size);
+        padding-right: var(--left-right-padding-size);
+        padding-top: 20px;
+        padding-bottom: 20px;
+        flex-grow: 1;
+      }
+      .banner {
+        width: 100%;
+        height: 150px; /* You can adjust this height to the size you prefer */
+        overflow: hidden;
+        position: relative; /* Add positioning to center the image properly */
+        border-radius: var(--primary-border-radius);
+      }
+
+      .banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures the image covers the container */
+        object-position: center; /* Centers the image */
+      }
+
+      .profile-pic-and-name {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+      .profile-pic-and-name img {
+        width: 70px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .profile-pic-and-name .bio {
+        margin-top: 5px;
+        font-size: 15px;
+        color: var(--text-gray-color);
+        text-align: center;
+      }
+      /* Card styles for Balance and Total Orders */
+      .account-details {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .account-details .card {
+        background-color: var(--color-sky);
+        color: var(--text-white-color);
+        border-radius: 15px;
+        padding: 15px;
+        width: 50%;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        position: relative;
+        overflow: hidden;
+      }
+      .account-details .card::before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 200px;
+        height: 200px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+      }
+      .account-details .card h2 {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      .account-details .card span {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .account-details .card .actions {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+      }
+      #balance-history {
+        cursor: pointer;
+        background-color: var(--color-secondary);
+        border: none;
+        color: var(--text-white-color);
+        padding: 8px 12px;
+        border-radius: var(--primary-border-radius);
+        font-size: 14px;
+      }
+      #top-up-balance {
+        cursor: pointer;
+        background-color: var(--color-secondary);
+        border: none;
+        color: var(--text-white-color);
+        padding: 8px 12px;
+        border-radius: var(--primary-border-radius);
+        font-size: 14px;
+      }
+
+      /* Container for saved/bought products */
+      .product-container {
+        margin-top: 30px;
+        text-align: center;
+        display: none; /* Hidden by default */
+      }
+      .product-container.active {
+        display: block; /* Show when active */
+      }
+      .product-container h2 {
+        color: var(--text-gray-color);
+      }
+      /* Bottom Navigation Bar */
+      .nav-bar {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: var(--color-sky);
+        height: var(--nav-height);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .nav-bar a {
+        color: var(--text-white-color);
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .nav-bar a.active {
+        font-weight: bold;
+        border-bottom: 2px solid var(--text-white-color);
+      }
+      .nav-bar a:hover {
+        color: var(--text-gray-color);
+      }
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .profile_container {
+          padding-left: 0;
+          padding-right: 0;
+        }
+        .banner {
+          height: 120px;
+          border-radius: 0;
+        }
+        .account-details .card {
+          width: 90%;
+        }
+      }
+      @media (max-width: 480px) {
+        .profile_container {
+          padding-left: 0;
+          padding-right: 0;
+          padding-top: 0;
+        }
+        .banner {
+          height: 100px;
+        }
+        .nav-bar a {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="profile_container">
+      <div class="banner">
+        <img src="select.png" alt="banner" id="banner-img" />
+      </div>
+      <div class="profile-pic-and-name">
+        <img src="select.png" alt="Profile Picture" id="profile-pic" />
+        <h1 id="user_name"></h1>
+        <div class="bio">
+          <p id="user_bio"></p>
+        </div>
+      </div>
+
+      <!-- Updated Balance Card with Wallet Information -->
+      <div class="account-details">
+        <div class="card">
+          <h2>Wallet Balance</h2>
+          <span id="user_balance">৳ 0</span>
+          <div class="actions">
+            <button id="top-up-balance">
+              <i class="fa-solid fa-wallet"></i> Top Up
+            </button>
+            <button id="balance-history">
+              <i class="fa-solid fa-clock-rotate-left"></i> History
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container for Products -->
+      <div class="product-container active" id="saved-products">
+        <h2>Saved Products</h2>
+        <div id="saved-products-list" class="product_list_container"></div>
+        <!-- Products will be injected here -->
+      </div>
+      <div class="product-container" id="bought-products">
+        <h2>Bought Products</h2>
+        <p>No bought products yet!</p>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+      <a href="#" id="nav-saved" class="active">Saved Products</a>
+      <a href="#" id="nav-bought">Bought Products</a>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const auth = getAuth(app);
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          console.log(user); // Check if user is detected
+          const userId = user.uid;
+          const userRef = ref(db, "users/" + userId);
+
+          onValue(userRef, (snapshot) => {
+            const userData = snapshot.val();
+            console.log(userData); // Check the fetched data
+            document.getElementById("user_name").innerText =
+              userData.name || "User";
+            document.getElementById("user_bio").innerText =
+              userData.bio || "No bio available";
+            document.getElementById("user_balance").innerText = `৳ ${
+              userData.balance || 0
+            }`;
+            document.getElementById("profile-pic").src =
+              userData.profile_picture || "select.png";
+            document.getElementById("banner-img").src =
+              userData.banner || "select.png";
+          });
+        } else {
+          console.log("No user is signed in");
+        }
+      });
+      // Toggle sections
+      const savedSection = document.getElementById("saved-products");
+      const boughtSection = document.getElementById("bought-products");
+
+      document.getElementById("nav-saved").addEventListener("click", () => {
+        savedSection.classList.add("active");
+        boughtSection.classList.remove("active");
+        document.getElementById("nav-saved").classList.add("active");
+        document.getElementById("nav-bought").classList.remove("active");
+      });
+
+      document.getElementById("nav-bought").addEventListener("click", () => {
+        boughtSection.classList.add("active");
+        savedSection.classList.remove("active");
+        document.getElementById("nav-bought").classList.add("active");
+        document.getElementById("nav-saved").classList.remove("active");
+      });
+
+// Function to show saved products
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    let userUid = user.uid;
+    const savedProductsRef = ref(db, `users/${userUid}/saved_products`);
+    const savedProductsContainer = document.getElementById("saved-products-list");
+
+    // Fetch saved products from Firebase
+    onValue(savedProductsRef, (snapshot) => {
+      savedProductsContainer.innerHTML = ""; // Clear the container
+      const savedProducts = snapshot.val();
+      if (savedProducts) {
+        // Loop through each saved product using its push ID
+        Object.keys(savedProducts).forEach((savedProductId) => {
+          const savedProduct = savedProducts[savedProductId]; // Get saved product details (e.g., product_id)
+          const productId = savedProduct.product_id; // Assuming product_id is stored under saved product details
+
+          // Fetch the product details using the product ID
+          const productRef = ref(db, `products/${productId}`);
+          onValue(productRef, (productSnapshot) => {
+            const product = productSnapshot.val();
+            if (product) {
+
+              // Generate images HTML
+              let imagesHTML = "";
+              if (product.images && product.images.length > 0) {
+                imagesHTML = `<img src="${product.images[1]}" class="product_image" alt="${product.title}" />`;
+              } else {
+                imagesHTML = `<img src="/images/no-image.png" alt="No Image" />`; // Fallback if no image exists
+              }
+
+              // Generate product card dynamically
+              const productsHTML = `
+                <div class="product_card" data-aos="zoom-in-up">
+                    <div class="product_image_container" onclick="handleProductClick('${productId}')">
+                        ${imagesHTML}
+                    </div>
+                    <div class="products_details_container">
+                        <p class="product_title">${product.title}</p>
+                        <div class="product_price_container">
+                            <p class="product_price">${product.currency} ${product.price}</p>
+                            <div class="discount_container">
+                                <p class="discount_amount">${product.discount_amount}</p>
+                                <p class="product_discount_percentage">-${product.discount_percentage}%</p>
+                            </div>
+                        </div>
+                        <div class="rating_and_share">
+                            <div class="product_rettings_container">
+                                <i id="star-1" class="fa-solid fa-star"></i>
+                                <i id="star-2" class="fa-solid fa-star"></i>
+                                <i id="star-3" class="fa-solid fa-star"></i>
+                                <i id="star-4" class="fa-solid fa-star"></i>
+                                <i id="star-5" class="fa-solid fa-star"></i>
+                                <p class="rettings">(0)</p>
+                            </div>
+                            <div class="share_container">
+                                <div class="dropdown">
+                                    <button class="dropbtn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                    <div class="dropdown-content">
+                                        <a id="saveProduct_${productId}" onClick="saveButtonClick('${productId}')">
+                                            <i id="saveProductIcon" class="fa-regular fa-bookmark"></i>
+                                        </a>
+                                        <a onclick="handleProductClick('${productId}')">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                        </a>
+                                        <a onClick="shareButtonClick('${productId}', '${product.title}')">
+                                            <i class="fa-solid fa-share-from-square"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              `;
+
+              // Append the product card to the container
+              savedProductsContainer.innerHTML += productsHTML;
+              updateSaveIcons();
+            }
+          });
+        });
+      } else {
+        savedProductsContainer.innerHTML = "<p>No saved products found.</p>";
+      }
+    });
+  }
+});
+    </script>
+    <script src="product_missing_info.js"></script>
+    <script src="save_product.js" type="module"></script>
+  </body>
 </html>
