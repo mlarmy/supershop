@@ -67,11 +67,9 @@ function saveButtonClick(product_id) {
                     // Update the icon to regular (unsaved) and remove the rose color
                     saveProductIcon.classList.remove("fa-solid", "saved-icon");
                     saveProductIcon.classList.add("fa-regular");
-                    alert("Product unsaved.");
                 })
                 .catch((error) => {
                     console.error("Error unsaving product: ", error);
-                    alert("Failed to unsave the product.");
                 });
         } else {
             // Product is not saved, so save it
@@ -83,11 +81,9 @@ function saveButtonClick(product_id) {
                     // Update the icon to solid (saved) and add the rose color
                     saveProductIcon.classList.remove("fa-regular");
                     saveProductIcon.classList.add("fa-solid", "saved-icon");
-                    alert("Product saved successfully!");
                 })
                 .catch((error) => {
                     console.error("Error saving product: ", error);
-                    alert("Failed to save the product.");
                 });
         }
     });
