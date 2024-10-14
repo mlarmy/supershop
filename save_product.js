@@ -67,6 +67,7 @@ function saveButtonClick(product_id) {
                     // Update the icon to regular (unsaved) and remove the rose color
                     saveProductIcon.classList.remove("fa-solid", "saved-icon");
                     saveProductIcon.classList.add("fa-regular");
+                    alert("Unsaved!");
                 })
                 .catch((error) => {
                     console.error("Error unsaving product: ", error);
@@ -81,6 +82,7 @@ function saveButtonClick(product_id) {
                     // Update the icon to solid (saved) and add the rose color
                     saveProductIcon.classList.remove("fa-regular");
                     saveProductIcon.classList.add("fa-solid", "saved-icon");
+                    alert("Successfully saved!");
                 })
                 .catch((error) => {
                     console.error("Error saving product: ", error);
