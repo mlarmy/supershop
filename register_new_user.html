@@ -22,7 +22,7 @@
         <p class="title-text">Register new user</p>
       </div>
       <form accept="submit">
-        <input type="text" id="name" name="name" placeholder="Name" required />
+        <input type="text" id="userName" name="name" placeholder="Name" required />
         <input
           type="email"
           id="email"
@@ -35,6 +35,7 @@
           name="password"
           id="password"
           placeholder="Password"
+          required
         />
 
         <input id="btn" type="submit" value="Register" />
@@ -74,7 +75,7 @@
         e.preventDefault();
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        const name = document.getElementById("name").value;
+        const userName = document.getElementById("userName").value;
 
         createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
@@ -85,7 +86,7 @@
             // Save info to database
             const dbRef = ref(db, `users/${userCredential.user.uid}`);
             set(dbRef, {
-              name: name,
+              name: userName,
               email: email,
               uid: userCredential.user.uid,
             })
