@@ -559,28 +559,28 @@ onAuthStateChanged(auth, (user) => {
             }
           });
         });
-
-      // Settings button click
-      document.getElementById("settings-btn").addEventListener("click", () => {
-        document.querySelector(".settings_container").style.display = "block";
-      });
-      document.getElementById("settings-close-btn").addEventListener("click", () => {
-        document.querySelector(".settings_container").style.display = "none";
-      });
-      // Log out
-      function logOut() {
-        auth.signOut().then(() => {
-          window.location.href = "index.html";
-        });
-      }
-      document.getElementById("logOutBtn").addEventListener("click", logOut);
-        
       } else {
         savedProductsContainer.innerHTML = "<p>No saved products found.</p>";
       }
     });
   }
 });
+
+            // Settings button click
+      document.getElementById("settings-btn").addEventListener("click", () => {
+        document.querySelector(".settings_container").style.display = "block";
+      });
+      document.getElementById("settings-close-btn").addEventListener("click", () => {
+        document.querySelector(".settings_container").style.display = "none";
+      });
+
+      // Log out
+      function logOut() {
+        auth.signOut().then(() => {
+          window.location.href = "/index.html";
+        });
+      }
+      document.getElementById("logOutBtn").addEventListener("click", logOut);
     </script>
     <script src="product_missing_info.js"></script>
     <script src="save_product.js" type="module"></script>
