@@ -154,7 +154,17 @@ function fetchProductDetails(productId) {
     }, (error) => {
       console.error("Error fetching product details:", error);
     });
-  }  
+  }
+
+
+function openOrderPage(product_id) {
+  const orderPageUrl = `place_order.html?productId=${product_id}`;
+  if(isUser){
+    window.location.href = orderPageUrl;
+  }else{
+    window.location.href = "login.html";
+  }
+}
 
 
 // Extract ratings
