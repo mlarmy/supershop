@@ -1,4 +1,4 @@
-const name = "SuperShop";
+const name = "Roovix Shop";
 const firebaseConfig = {
     apiKey: "AIzaSyDXl_4DpPjg_W-Kxly8dFFFwb53irmOntE",
     authDomain: "supershop-26b35.firebaseapp.com",
