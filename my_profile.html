@@ -389,14 +389,14 @@
       </div>
       <div class="product-container" id="bought-products">
         <h2>Bought Products</h2>
-        <p>No bought products yet!</p>
+        <p>No orders yet!</p>
       </div>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
       <a href="#" id="nav-saved" class="active">Saved Products</a>
-      <a href="#" id="nav-bought">Bought Products</a>
+      <a href="#" id="nav-bought">My Orders</a>
     </div>
 
     <!-- Settings -->
@@ -410,7 +410,7 @@
         </div>
         <div class="settings_actions_container">
           <div class="account_action" id="account_action">
-            <img src="/images/select.png" id="profile-pic-account" alt="profile-pic">
+            <img src="select.png" id="profile-pic-account" alt="profile-pic">
             <h1 class="user_name_in_account"></h1>
             <button id="logOutBtn"><i class="fa-solid fa-right-from-bracket"></i>LogOut</button>
           </div>
@@ -445,6 +445,7 @@
             console.log(userData); // Check the fetched data
             document.getElementById("user_name").innerText =
               userData.name || "User";
+            document.querySelector(".user_name_in_account").innerText = userData.name || "No User";
             document.getElementById("user_bio").innerText =
               userData.bio || "No bio available";
             document.getElementById("user_balance").innerText = `৳ ${
@@ -454,6 +455,7 @@
               userData.profile_picture || "select.png";
             document.getElementById("banner-img").src =
               userData.banner || "select.png";
+            document.getElementById("profile-pic-account").src = userData.profile_picture || "select.png";
           });
         } else {
           console.log("No user is signed in");
