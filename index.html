@@ -75,6 +75,13 @@
                     Seller</a
                   >
                 </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-crown"></i> Become a SuperShop
+                    partnership</a
+                  >
+                </li>
               </ul>
             </li>
             <li class="nav-item dropdown">
@@ -98,13 +105,6 @@
                     ><i class="fa-solid fa-user-secret"></i> About us</a
                   >
                 </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#"
-                    ><i class="fa-solid fa-crown"></i> Become a SuperShop
-                    partnership</a
-                  >
-                </li>
               </ul>
             </li>
             <li class="nav-item dropdown">
@@ -119,22 +119,8 @@
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" id="order-btn"
-                    ><i class="fa-brands fa-shopify"></i> My Orders</a
-                  >
-                </li>
-                <li>
                   <a class="dropdown-item" id="my_profile_btn"
-                    ><i class="fa-regular fa-user"></i> MY Profile</a
-                  >
-                </li>
-                                <li>
-                  <a class="dropdown-item" id="logOutBtn" style="color: red"
-                    ><i
-                      class="fa-solid fa-right-from-bracket"
-                      style="color: red"
-                    ></i>
-                    LogOut</a
+                    ><i class="fa-regular fa-user"></i> Profile</a
                   >
                 </li>
               </ul>
@@ -155,7 +141,7 @@
       <div class="container">
         <div class="slow_gun">
           <i class="fa-solid fa-crown"></i>
-          <h3 id="welcome-title">Welcome to our online SuperShop!</h3>
+          <h3 id="welcome-title">Welcome to our online Roovix Shop!</h3>
         </div>
         <form accept="submit" onsubmit="return false;">
           <!-- Prevent form submission -->
@@ -647,26 +633,6 @@
         .addEventListener("click", () => {
           openProfilePage();
         });
-
-      //  Open my profile page
-      function openOrderPage() {
-        if (isUser) {
-          window.location.href = "order.html";
-        } else {
-          window.location.href = "login.html";
-        }
-      }
-      document.getElementById("order-btn").addEventListener("click", () => {
-        openOrderPage();
-      });
-
-      // Log out
-      function logOut() {
-        auth.signOut().then(() => {
-          window.location.href = "#";
-        });
-      }
-      document.getElementById("logOutBtn").addEventListener("click", logOut);
     </script>
 
     <!-- script for handle product card -->
