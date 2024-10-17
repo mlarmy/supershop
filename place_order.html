@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/images/logo_png.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/styles/order_page.css" />
+
+    <!-- font awesome  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <script src="/config.js"></script>
+    <title>Roovix Shop - Place Order</title>
+  </head>
+  <body>
+
+    <!--Error Popup -->
+    <div id="error_popup_container">
+      <div class="error_popup_ui">
+        <img src="/images/error ui.png" alt="error">
+        <p><i class="fa-solid fa-triangle-exclamation"></i> Error</p>
+      </div>
+      <p id="error_message"></p>
+      <button id="close_error_popup_btn">Close</button>
+    </div>
+
+    <div class="container">
+      <div class="title">
+        <h1>Place Order</h1>
+        <p id="product_title"></p>
+      </div>
+      <div class="product_details">
+        <div class="product_image_container">
+            <img id="product_image">
+        </div>
+        <div class="product_price_container">
+            <div class="product_price">
+                <span>Price: </span>
+                <p id="product_price">$ 0</p>
+                <p id="discount_amount"></p>
+            </div>
+            <div class="delivery_price">
+                <span>Delivery: </span>
+                <p id="delivery_price">$ 0</p>
+            </div>
+        </div>
+        <div class="total_price_container">
+          <span>Total price: </span>
+          <p id="total_price"></p>
+          <p id="promo_discount_amount"></p>
+        </div>
+        <div class="spacial_token_field">
+          <span>Promo Code:</span>
+          <div class="field_container">
+            <input type="text" id="space_token" placeholder="Enter code (Optional)">
+            <button id="promo_code_btn">Apply discount Code</button>
+          </div>
+        </div>
+      </div>
+      <div class="order_form">
+        <div class="personal_info_container">
+          <span><i class="fa-regular fa-user"></i> Personal info</span>
+          <div class="field_container">
+            <input type="text" id="buyer_name" placeholder="Your name">
+            <input type="number" id="buyer_phone" placeholder="Your phone number">
+            <input type="text" id="buyer_email" placeholder="Your email">
+            <input type="text" id="buyer_address" placeholder="Your full address">
+
+            <button id="personal_info_btn">Confirm</button>
+          </div>
+        </div>
+        <div class="product_details_container">
+          <span><i class="fa-solid fa-paint-roller"></i> Product details</span>
+          <div class="field_container">
+            <input type="text" id="product_color" placeholder="Product color info (Optional)">
+            <input type="text" id="product_size" placeholder="Size info (Optional)">
+            <input type="number" id="product_quantity" placeholder="Quantity (Optional)">
+
+            <button id="product_info_btn">Confirm</button>
+          </div>
+        </div>
+        <div class="payment_method_container">
+          <span><i class="fa-solid fa-credit-card"></i> Billing</span>
+          <button id="show_roovix_pay">Pay With Roovix</button>
+          <p>-----or-----</p>
+          <button id="show_mobile_pay">Pay with Mobile Banking</button>
+          <div class="roovix_payment_method">
+            <div class="roovix_account_info">
+              <p>Your Roovix account balance</p>
+              <p id="roovix_balance"></p>
+              <p style="margin-top: 10px;"><i class="fa-solid fa-circle-info"></i> Pay <span id="show_delivery_price_in_roovix"></span> For delivery!</p>
+            </div>
+              <button id="roovix_payment_method_btn">Delivery payment with Roovix</button>
+          </div>
+          <div class="mobile_banking_method">
+            <div class="mobile_banking_account_info">
+              <p>Shop account details</p>
+              <p>Owner: Roovix Company</p>
+              <p>Account number: 01713661952</p>
+              <p style="margin-top: 10px;"><i class="fa-solid fa-circle-info"></i> Pay <span id="show_delivery_price_in_bkash"></span> and confirm the transaction id</p>
+              <p>If delivery price is <span class="color_balance">0</span> then add (none) in transaction id!</p>
+            </div>
+            <input type="text" id="bkash_transaction_id" placeholder="Bkash transaciton id">
+            <button id="mobile_banking_payment_method_btn">Delivery payment with Mobile</button>
+          </div>
+        </div>
+        <div class="delivery_information_container">
+          <span><i class="fa-solid fa-truck-plane"></i> Delivery option</span>
+          <div class="field_container">
+            <input type="text" id="delivery_address" placeholder="Delivery full address">
+            <span>-----or-----</span>
+
+            <!-- Select delivery location -->
+            <iframe id="map_container" src="/templates/select_delivery_location.html" height="580px" width="100%" frameborder="0"></iframe>
+
+            <span>-----or-----</span>
+            <input type="text" id="map_latitude" placeholder="Map latitude">
+            <input type="text" id="map_longitude" placeholder="Map longitude">
+
+            <button id="confirm_order"><i class="fa-solid fa-truck-arrow-right"></i> Confirm order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        get,
+        set,
+        child,
+        push,
+        update
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const auth = getAuth(app);
+      let productId = "";
+      let total_price_amount = 0;
+
+      // Order filed data
+      let name = "";
+      let phone = "";
+      let email = "";
+      let address = "";
+      let product_color = "";
+      let product_size = "";
+      let product_quantity = 1;
+      let delivery_price = 0;
+      let bkash_transaction_id = "";
+      let delivery_address = "";
+      let map_latitude = "";
+      let map_longitude = "";
+      let promo_code_value = "";
+      let payment_method = "";
+      let product_id = "";
+      let product_title = "";
+      let product_image_url = "";
+      let user_balance = "";
+
+      // Auth listener
+      let user_uid = "";
+
+      // Promo code reword balance
+      let promo_code_reward_balance = 0;
+
+      // Field container 
+      const personal_info_container = document.querySelector(".personal_info_container");
+      const product_details_container = document.querySelector(".product_details_container");
+      const payment_method_container = document.querySelector(".payment_method_container");
+      const delivery_information_container = document.querySelector(".delivery_information_container");
+      const roovix_payment_method = document.querySelector(".roovix_payment_method");
+      const mobile_banking_method = document.querySelector(".mobile_banking_method");
+      const confirm_order_btn = document.getElementById("confirm_order");
+
+      // Error popup
+      const error_popup = document.getElementById("error_popup_container");
+      const error_message = document.getElementById("error_message");
+      const close_error_popup_btn = document.getElementById("close_error_popup_btn");
+
+      close_error_popup_btn.addEventListener("click", ()=>{
+        error_popup.style.display = "none";
+      });
+
+      // Function to get the productId from the URL
+      function getProductIdFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("productId");
+      }
+      productId = getProductIdFromURL();
+      product_id = productId;
+
+      // Fetch product details and display them on the page
+      const productRef = ref(db, `products/${productId}`);
+      onValue(productRef, (snapshot) => {
+        const productData = snapshot.val();
+        if (productData) {
+          if(productData.images) {
+            document.getElementById("product_image").src = productData.images[1];
+            product_image_url = productData.images[1];
+          }
+
+          document.getElementById("product_title").textContent = productData.title;
+          product_title = productData.title;
+          document.getElementById("product_price").textContent = `${productData.currency} ${productData.price}`;
+
+          if(productData.delivery_price && productData.delivery_price !== 0) {
+            delivery_price = productData.delivery_price;
+            document.getElementById("show_delivery_price_in_roovix").textContent = `${productData.currency} ${productData.delivery_price}`;
+            document.getElementById("show_delivery_price_in_bkash").textContent = `${productData.currency} ${productData.delivery_price}`;
+            document.getElementById("delivery_price").textContent = `${productData.currency} ${productData.delivery_price}`;
+
+            // Total price
+            total_price_amount = productData.price + productData.delivery_price
+            document.getElementById("total_price").textContent = `${productData.currency} ${total_price_amount}`;
+          }else{
+            document.getElementById("delivery_price").textContent = `Free`;
+            document.getElementById("show_delivery_price_in_roovix").textContent = `৳ 0`;
+            document.getElementById("show_delivery_price_in_bkash").textContent = `৳ 0`;
+          }
+
+          // Show total price with promo discount filter
+          if (promo_code_reward_balance !== 0){
+              document.getElementById("total_price").textContent = `${productData.currency} ${productData.price - promo_code_reward_balance}`;
+          }else{
+              document.getElementById("total_price").textContent = `${productData.currency} ${productData.price}`;
+          }
+          
+          if(productData.discount_amount && productData.discount_amount !== 0) {
+            document.getElementById("discount_amount").textContent = `${productData.discount_amount}`;
+          }else {
+            document.getElementById("discount_amount").style.display = "none";
+          }
+
+
+        } else {
+          alert("Product not found");
+        }
+      });
+
+      // Check user
+      auth.onAuthStateChanged((user)=>{
+        if(user) {
+          console.log("User signed in:", user.uid);
+          user_uid = user.uid;
+          const userRefFor_info = ref(db, `users/${user_uid}`);
+          onValue(userRefFor_info, (snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+              personal_info_container.style.display = "flex";
+              document.getElementById("buyer_name").value = userData.name;
+              document.getElementById("buyer_phone").value = userData.phone || "";
+              document.getElementById("buyer_email").value = userData.email;
+              document.getElementById("buyer_address").value = userData.address || "";
+              
+              // account balance
+              document.getElementById("roovix_balance").textContent = `৳ ${userData.balance}`;
+
+              // user lat lang
+              if(userData.location){
+                document.getElementById("map_latitude").value = userData.location.lat || "";
+                document.getElementById("map_longitude").value = userData.location.lng || "";
+                map_latitude = userData.location.lat || "";
+                map_longitude = userData.location.lng || "";
+              }
+            } else {
+              personal_info_container.style.display = "flex";
+            }
+          });
+        }else{
+          console.log("User not found");
+          window.location.href = "login.html";
+        }
+      });
+
+      // Promo code functionality
+      document.getElementById("promo_code_btn").addEventListener("click", () => {
+        const promo_code = document.getElementById("space_token").value;
+        promo_code_value = promo_code;
+        const promoCodeAdminRef = ref(db, "admin");
+        onValue(promoCodeAdminRef, (snapshot) => {
+          const adminData = snapshot.val();
+          if(adminData) {
+            if (promo_code === adminData.promo_code) {
+              promo_code_reward_balance = adminData.promo_reword;
+
+              const productRef_for_promo = ref(db, `products/${productId}`);
+              onValue(productRef_for_promo, (snapshot) => {
+                const promo_product = snapshot.val();
+
+                if (promo_product) {
+                  // Update total price with discount
+                  document.getElementById("promo_discount_amount").textContent = promo_code_reward_balance;
+                  document.getElementById("promo_discount_amount").style.display = "block";
+                  document.getElementById("total_price").textContent = `${promo_product.currency} ${(promo_product.price + promo_product.delivery_price) - promo_code_reward_balance}`;
+                  
+                  // Hide promo field 
+                  document.querySelector(".spacial_token_field").style.display = "none";
+                } else {
+                  // If promo_product is not found, handle error safely
+                  document.getElementById("total_price").textContent = `${promo_product.currency} ${promo_product.price}`;
+                }
+              });
+            }else{
+              // Hide promo field 
+              document.querySelector(".spacial_token_field").style.display = "none";
+            }
+          }
+        });
+      });
+
+
+      // Order input field functionality for personal information
+      document.getElementById("personal_info_btn").addEventListener("click", () => {
+        const buyer_name = document.getElementById("buyer_name").value;
+        const buyer_phone = document.getElementById("buyer_phone").value;
+        const buyer_email = document.getElementById("buyer_email").value;
+        const buyer_address = document.getElementById("buyer_address").value;
+        
+        if (!buyer_name ||!buyer_phone ||!buyer_email ||!buyer_address) {
+          error_message.textContent = "Please fill all the required fields";
+          error_popup.style.display = "flex";
+          return;
+        }
+        // Phone number validation
+        if (buyer_phone.length < 11) {
+            error_message.textContent = "Invalid phone number. It should be at least 11 digits.";
+            error_popup.style.display = "flex";
+            return;
+        }
+
+        // Email validation using a regular expression
+        let email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Basic email pattern
+
+        if (!email_pattern.test(buyer_email)) {
+            error_message.textContent = "Invalid email address.";
+            error_popup.style.display = "flex";
+            return;
+        }
+        
+        name = buyer_name;
+        phone = buyer_phone;
+        email = buyer_email;
+        address = buyer_address;
+
+        // Hide personal information container and show product details container
+        personal_info_container.style.display = "none";
+        product_details_container.style.display = "flex";
+      });
+
+      // Order input field functionality for product information
+      document.getElementById("product_info_btn").addEventListener("click", () => {
+        product_color = document.getElementById("product_color").value;
+        product_size = document.getElementById("product_size").value;
+        product_quantity = document.getElementById("product_quantity").value;
+
+        if(!product_quantity){
+          product_quantity = 1;
+        }
+
+        // Hide product details container and show payment method container
+        product_details_container.style.display = "none";
+        payment_method_container.style.display = "flex";
+      });
+
+      // Show roovix account or mobile banking option to pay payment
+      document.getElementById("show_roovix_pay").addEventListener("click", ()=>{
+        roovix_payment_method.style.display = "flex";
+        mobile_banking_method.style.display = "none";
+        document.getElementById("show_mobile_pay").style.display = "none";
+        document.getElementById("show_roovix_pay").style.display = "none";
+      });
+      document.getElementById("show_mobile_pay").addEventListener("click", ()=>{
+        roovix_payment_method.style.display = "none";
+        mobile_banking_method.style.display = "flex";
+        document.getElementById("show_mobile_pay").style.display = "none";
+        document.getElementById("show_roovix_pay").style.display = "none";
+      });
+
+      // Order input field functionality for payment method
+      document.getElementById("roovix_payment_method_btn").addEventListener("click", () => {
+        if(user_uid){
+          const userRefFor_balance = ref(db, `users/${user_uid}`);
+          get(userRefFor_balance).then((snapshot) => {
+            const userBalance = snapshot.val().balance;
+            user_balance = userBalance;
+            if(userBalance >= total_price_amount){
+              // Hide payment method details container and show delivery option container
+              payment_method = "Roovix account balance"
+              payment_method_container.style.display = "none";
+              delivery_information_container.style.display = "flex";
+            }else{
+              error_message.textContent = "Insufficient balance. Please top up your wallet.";
+              error_popup.style.display = "flex";
+              return;
+            }
+          });
+        }
+      });
+
+      // Delivery payment with mobile banking 
+      document.getElementById("mobile_banking_payment_method_btn").addEventListener("click", () => {
+        const bkash_t_id = document.getElementById("bkash_transaction_id").value;
+        if(!bkash_t_id){
+          error_message.textContent = "Please enter Bkash transaction ID.";
+          error_popup.style.display = "flex";
+          return;
+        }
+        payment_method = "Mobile banking Bkash";
+        bkash_transaction_id = bkash_t_id;
+        payment_method_container.style.display = "none";
+        delivery_information_container.style.display = "flex";
+      });
+
+      // Order input field functionality for delivery information
+      confirm_order_btn.addEventListener("click", () => {
+        const d_address = document.getElementById("delivery_address").value;
+        const m_latitude = document.getElementById("map_latitude").value;
+        const m_longitude = document.getElementById("map_longitude").value;
+        if(!d_address){
+          if(!m_latitude && !m_longitude){
+            error_message.textContent = "Please provide map coordinates or Full delivery address.";
+            error_popup.style.display = "flex";
+            return;
+          }
+          map_latitude = m_latitude;
+          map_longitude = m_longitude;
+          confirmOrder();
+        }else{
+          delivery_address = d_address;
+          confirmOrder();
+        }
+      });
+
+      function confirmOrder() {
+        if (user_uid) {
+          // Create a reference for the orders path
+          const confirmOrderRef = ref(db, `orders`); // orders/ path
+          const newOrderRef = push(child(confirmOrderRef, user_uid)); // Generate unique key under orders/${user_uid}
+
+          // Create a reference for the user's pending orders
+          const userOrdersRef = ref(db, `users/${user_uid}/my_orders/pending`);
+          const newUserOrderRef = push(userOrdersRef); // Generate unique key under user's pending orders
+
+          // Order data object
+          const orderData = {
+            // Personal info
+            name: name,
+            phone: phone,
+            email: email,
+            address: address,
+            user_balance: user_balance,
+            // Product details
+            product_id: product_id,
+            product_image_url: product_image_url,
+            product_title: product_title,
+            product_color: product_color,
+            product_size: product_size,
+            product_quantity: product_quantity,
+            // Delivery option
+            delivery_price: delivery_price,
+            delivery_address: delivery_address,
+            map_latitude: map_latitude,
+            map_longitude: map_longitude,
+            // Promo code
+            promo_discount_amount: promo_code_reward_balance,
+            promo_code: promo_code_value,
+            // Payment method
+            bkash_transaction_id: bkash_transaction_id,
+            payment_method: payment_method,
+            // Time and status
+            time: new Date().toISOString(), // Correctly call the function
+            status: "pending"
+          };
+
+          // Save order to both locations (orders and user's pending orders)
+          const saveOrderToDb = set(newOrderRef, orderData); // Save to the global orders node
+          const saveOrderToUser = set(newUserOrderRef, orderData); // Save to user's pending orders
+
+          // Ensure both writes succeed
+          Promise.all([saveOrderToDb, saveOrderToUser])
+            .then(() => {
+              const userRefFor_update_balance = ref(db, `users/${user_uid}`);
+              alert("Order Successful!");
+              window.location.href = "/index.html";
+            })
+            .catch((err) => {
+              console.error(err);
+              alert("Failed to place order. Please try again later.");
+            });
+        } else {
+          console.log("User not found");
+          window.location.href = "login.html";
+        }
+      }
+    </script>
+  </body>
+</html>

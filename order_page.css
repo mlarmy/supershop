@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+:root {
+    --color-background: #fff;
+    --color-primary: #F36944;
+    --color-base: #FEC92B;
+    --color-sky: #74C0FC;
+    --color-green-gray: #63E6BE;
+    --color-pink-gray: #E599F7;
+    --text-black-color: #000;
+    --text-white-color: #fff;
+    --text-gray-color: rgb(59, 59, 59);
+    --logo-size: 50px;
+    --name-size: 20px;
+    --navber-height: 60px;
+    --mneu-item-font-size: 15px;
+    --left-right-padding-size: 10vw;
+    --primary-border-radius: 10px;
+    --background-base-color: #74c1fc15;
+}
+
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+body {
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    padding-left: var(--left-right-padding-size);
+    padding-right: var(--left-right-padding-size);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.container {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+}
+#product_title {
+    font-size: 20px;
+    max-width: 300px;
+}
+
+.product_image_container{
+    width: 200px;
+    border-radius: var(--primary-border-radius);
+    display: flex;
+    height: 250px;
+    overflow: hidden;
+}
+#product_image {
+    width: 200px;
+    height: 250px;
+    object-fit: cover;
+}
+.product_price_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+.product_price_container .product_price, .delivery_price {
+    display: flex;
+    gap: 5px;
+    font-size: 20px;
+}
+#product_price{
+    color: #F36944;
+}
+#delivery_price {
+    color: #F36944;
+}
+#discount_amount {
+    text-decoration: line-through;
+    color: gray;
+}
+.total_price_container {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+.total_price_container span{
+    font-size: 20px;
+}
+.total_price_container p {
+    font-size: 20px;
+    color: #F36944;
+}
+.spacial_token_field {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-top: 1px solid gray;
+    padding-top: 10px;
+    border-bottom: 1px solid gray;
+    padding-bottom: 10px;
+}
+.spacial_token_field .field_container input {
+    outline: none;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+.spacial_token_field .field_container input:focus {
+    outline: auto;
+    outline-color: #74C0FC;
+}
+.spacial_token_field .field_container button {
+    padding: 10px;
+    border: 1px solid #63abe6;
+    background-color: #63abe6;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.order_form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 30px;
+}
+.personal_info_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.product_details_container {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+.delivery_information_container {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100% !important;
+    min-width: 100% !important;
+}
+#map_container {
+    width: 500px;
+}
+
+.field_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+.field_container input {
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid gray;
+}
+.field_container input:focus {
+    outline: auto;
+    outline-color: #74C0FC;
+}
+button {
+    padding: 10px;
+    border: 1px solid #63E6BE;
+    background-color: #1ad49d;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#confirm_order {
+    background-color: rgb(0, 167, 0);
+}
+.payment_method_container {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+.roovix_payment_method {
+    margin-top: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+}.roovix_account_info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+#roovix_balance {
+    color: #F36944;
+    font-size: 20px;
+}
+.mobile_banking_method {
+    display: none;
+    flex-direction: column;
+    max-width: 300px;
+    gap: 10px;
+}
+#show_delivery_price_in_bkash {
+    color: #F36944;
+}
+.color_balance {
+    color: #F36944;
+}
+.mobile_banking_method input {
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid gray;
+}
+.mobile_banking_method input:focus {
+    outline: auto;
+    outline-color: #74C0FC;
+}
+#error_popup_container {
+    overflow: hidden;
+    background-color: #d7dcf8;
+    border-radius: var(--primary-border-radius);
+    padding: 20px;
+    position: fixed;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#error_popup_container .error_popup_ui {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: rgb(255, 102, 0);
+    font-weight: 800;
+}
+#error_popup_container .error_popup_ui img {
+    opacity: 0.7;
+    width: 150px;
+}
+#error_message {
+    max-width: 190px;
+    text-align: center;
+}
+#close_error_popup_btn {
+    background-color: #F36944;
+    outline: none;
+    border: none;
+    width: 100px;
+}
+#promo_discount_amount {
+    font-size: 20px;
+    color: gray;
+    text-decoration: line-through;
+    opacity: 0.7;
+    display: none;
+}
+#delivery_address {
+    width: 100%;
+}
+#show_delivery_price_in_roovix {
+    color: #F36944;
+}
+
+@media screen and (max-width: 750px) {
+    body {
+        padding: 0;
+    }
+    #map_container {
+        width: 370px;
+    }
+}
+@media screen and (max-width: 420px) {
+    #map_container {
+        width: 360px;
+    }
+}
+@media screen and (max-width: 385px) {
+    #map_container {
+        width: 280px;
+    }
+}
