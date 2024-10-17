@@ -38,6 +38,11 @@ window.onload = function () {
   const productId = getProductIdFromURL();
   if (productId) {
     fetchProductDetails(productId);
+
+    // Open product order page
+    document.getElementById("place-order-button").addEventListener("click", ()=>{
+      openOrderPage(productId);
+    });
   } else {
     console.error("Product ID not found in the URL");
   }
