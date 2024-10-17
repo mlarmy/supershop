@@ -193,6 +193,117 @@
       .nav-bar a:hover {
         color: var(--text-gray-color);
       }
+            #settings-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+      }
+      #settings-btn i {
+        color: white;
+        font-size: 20px;
+      }
+      .visible {
+        display: block;
+      }
+      .settings_container {
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(128, 128, 128, 0.219);
+        display: none;
+        position: absolute;
+      }
+      .settings_inside_container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%;
+        height: 30%;
+        background-color: #f7f7f7;
+        border-radius: var(--primary-border-radius);
+        border: 1px solid rgba(128, 128, 128, 0.137);
+        overflow: hidden;
+        display: flex;
+        z-index: 100;
+      }
+      .settings_item_container {
+        height: 100%;
+        width: 30%;
+        background-color: #fff;
+        border-right: 1px solid rgba(128, 128, 128, 0.137);
+      }
+      .settings_item_container ul {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 20px;
+      }
+      .settings_item_container ul li {
+        padding: 10px;
+        display: flex;
+        gap: 10px;
+        list-style: none;
+        border-radius: 5px;
+      }
+      .settings_item_container ul li.selected {
+        background-color: #74c0fc;
+        color: white;
+      }
+      .settings_item_container ul li:hover{
+        cursor: pointer;
+        color: black;
+        background-color: rgba(196, 196, 196, 0.322);
+      }
+      .settings_actions_container {
+        position: relative;
+        width: 70%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      #settings-close-btn{
+        padding: 10px;
+        cursor: pointer;
+        background-color: transparent;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #000;
+        border: none;
+        outline: none;
+        transition: 0.1s linear;
+        z-index: 1000;
+      }
+      #settings-close-btn:hover{
+        background-color: rgba(196, 196, 196, 0.322);
+        border-radius: 50%;
+      }
+      #settings-close-btn i {
+        font-size: 20px;
+      }
+            #logOutBtn{
+        cursor: pointer;
+        padding: 5px;
+        margin-top: 10px;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        background-color: #f36944;
+        color: #fff;
+        border: 1px solid #f36944;
+        outline: none;
+        border-radius: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
+      }
+      
       /* Responsive Design */
       @media (max-width: 768px) {
         .profile_container {
@@ -206,6 +317,9 @@
         .account-details .card {
           width: 90%;
         }
+        .settings_inside_container {
+          width: 100%;
+        }
       }
       @media (max-width: 480px) {
         .profile_container {
@@ -218,6 +332,9 @@
         }
         .nav-bar a {
           font-size: 14px;
+        }
+        .settings_item_container ul {
+          padding: 0;
         }
       }
     </style>
@@ -268,6 +385,25 @@
       <a href="#" id="nav-saved" class="active">Saved Products</a>
       <a href="#" id="nav-bought">Bought Products</a>
     </div>
+
+    <!-- Settings -->
+     <div class="settings_container">
+      <div class="settings_inside_container">
+        <button id="settings-close-btn"><i class="fa-regular fa-circle-xmark"></i></button>
+        <div class="settings_item_container">
+          <ul id="settings-list">
+            <li id="account"><i class="fa-solid fa-id-card-clip"></i> Account</li>
+          </ul>
+        </div>
+        <div class="settings_actions_container">
+          <div class="account_action" id="account_action">
+            <img src="/images/select.png" id="profile-pic-account" alt="profile-pic">
+            <h1 class="user_name_in_account"></h1>
+            <button id="logOutBtn"><i class="fa-solid fa-right-from-bracket"></i>LogOut</button>
+          </div>
+        </div>
+      </div>
+     </div>
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
@@ -419,5 +555,6 @@ onAuthStateChanged(auth, (user) => {
     </script>
     <script src="product_missing_info.js"></script>
     <script src="save_product.js" type="module"></script>
+    <script src="settings-logic.js"></script>
   </body>
 </html>
