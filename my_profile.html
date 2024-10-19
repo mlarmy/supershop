@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="logo_png.png" type="image/x-icon" />
     <script src="config.js"></script>
+    <link rel="stylesheet" href="user_order_list.css">
     <link rel="stylesheet" href="products_list.css" />
     <!-- FOnt awesome -->
     <link
@@ -565,6 +566,52 @@ onAuthStateChanged(auth, (user) => {
         savedProductsContainer.innerHTML = "<p>No saved products found.</p>";
       }
     });
+
+              // Show user orders
+          if (user){
+            const ordersRef = ref(db, `orders/${userUid}`);
+            const ordersContainer = document.getElementById("orders-list-container");
+            onValue(ordersRef, (snapshot) => {
+              if(snapshot){
+                const userRefInOrders = snapshot.val();
+                for(const orderID in userRefInOrders){
+                  const order = userRefInOrders[orderID];
+                  if(order){
+                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    const orderTime = new Date(order.time);
+
+                    // Some product details
+                    const productRefInsideOrder = ref(db, `products/${order.product_id}`);
+                    onValue(productRefInsideOrder, (product_snapshot) => {
+                      if(product_snapshot){
+                        const product_snapshot_val = product_snapshot.val();
+                      
+                        // Show it in list of user order
+                        const myOrderHtml = `
+                          <div class="order_container">
+                            <div class="order_image_container">
+                              <img class="order_image" src="${order.product_image_url}"/>  
+                            </div>  
+                            <div class="order_details_container">
+                              <div class="order_title_container">
+                                <h3 class="order_title">${product_snapshot_val.title}</h3>
+                              </div>
+                              <div class="order_delivery_container">
+                                <p class="order_id">Order ID: ${orderID}</p>
+                                <p class="order_date">${monthNames[orderTime.getMonth()]}-${orderTime.getDate()}</p>
+                              </div>
+                              <p class="order_status">Status: <span class="status_value">${order.status}</span></p>
+                            </div> 
+                          </div>
+                        `;
+                        ordersContainer.innerHTML += myOrderHtml;
+                      }
+                    });
+                  }
+                }
+              }
+            });
+          }
   }
 });
 
