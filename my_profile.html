@@ -389,8 +389,10 @@
         <!-- Products will be injected here -->
       </div>
       <div class="product-container" id="bought-products">
-        <h2>Bought Products</h2>
-        <p>No orders yet!</p>
+        <h2>My Orders</h2>
+        <div id="orders-list-container">
+          <!-- User orders will be show here-->
+        </div>
       </div>
     </div>
 
@@ -609,7 +611,8 @@ onAuthStateChanged(auth, (user) => {
                     });
                   }
                 }
-              }
+              }else{
+                ordersContainer.innerHTML = `<p>No orders yet!</p>`;
             });
           }
   }
