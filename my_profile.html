@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="logo_png.png" type="image/x-icon" />
-    <script src="config.js"></script>
-    <link rel="stylesheet" href="user_order_list.css">
+    <script src="/config.js"></script>
     <link rel="stylesheet" href="products_list.css" />
+    <link rel="stylesheet" href="user_order_list.css">
     <!-- FOnt awesome -->
     <link
       rel="stylesheet"
@@ -15,7 +15,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>[name] - My Profile</title>
+    <title>Roovix Shop - Profile</title>
 
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
@@ -37,7 +37,7 @@
         --menu-item-font-size: 15px;
         --left-right-padding-size: 10vw;
         --primary-border-radius: 10px;
-        --background-base-color: #f8f9fa;
+        --background-base-color: #74c1fc15;
         --nav-height: 60px;
         --nav-color: var(--color-primary);
       }
@@ -66,7 +66,7 @@
       }
       .banner {
         width: 100%;
-        height: 150px; /* You can adjust this height to the size you prefer */
+        height: 180px; /* You can adjust this height to the size you prefer */
         overflow: hidden;
         position: relative; /* Add positioning to center the image properly */
         border-radius: var(--primary-border-radius);
@@ -100,12 +100,14 @@
       }
       /* Card styles for Balance and Total Orders */
       .account-details {
+        position: relative;
         margin-top: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
       }
       .account-details .card {
+        position: relative;
         background-color: var(--color-sky);
         color: var(--text-white-color);
         border-radius: 15px;
@@ -195,7 +197,8 @@
       .nav-bar a:hover {
         color: var(--text-gray-color);
       }
-            #settings-btn {
+
+      #settings-btn {
         position: absolute;
         top: 10px;
         right: 10px;
@@ -289,7 +292,8 @@
       #settings-close-btn i {
         font-size: 20px;
       }
-            .account_action {
+      
+      .account_action {
         display: none;
         flex-direction: column;
         align-items: center;
@@ -316,15 +320,15 @@
         padding-right: 10px;
         padding-left: 10px;
       }
-      
+
       /* Responsive Design */
       @media (max-width: 768px) {
         .profile_container {
           padding-left: 0;
           padding-right: 0;
+          padding-top: 0;
         }
         .banner {
-          height: 120px;
           border-radius: 0;
         }
         .account-details .card {
@@ -341,7 +345,7 @@
           padding-top: 0;
         }
         .banner {
-          height: 100px;
+          height: 120px;
         }
         .nav-bar a {
           font-size: 14px;
@@ -369,7 +373,7 @@
       <div class="account-details">
         <div class="card">
           <button id="settings-btn"><i class="fa-solid fa-gear"></i></button>
-          <h2>Wallet Balance</h2>
+          <h2><i class="fa-solid fa-credit-card"></i> Wallet Balance</h2>
           <span id="user_balance">৳ 0</span>
           <div class="actions">
             <button id="top-up-balance">
@@ -413,7 +417,7 @@
         </div>
         <div class="settings_actions_container">
           <div class="account_action" id="account_action">
-            <img src="select.png" id="profile-pic-account" alt="profile-pic">
+            <img src="/images/select.png" id="profile-pic-account" alt="profile-pic">
             <h1 class="user_name_in_account"></h1>
             <button id="logOutBtn"><i class="fa-solid fa-right-from-bracket"></i>LogOut</button>
           </div>
@@ -450,15 +454,15 @@
               userData.name || "User";
             document.querySelector(".user_name_in_account").innerText = userData.name || "No User";
             document.getElementById("user_bio").innerText =
-              userData.bio || "No bio available";
+              userData.bio || "";
             document.getElementById("user_balance").innerText = `৳ ${
               userData.balance || 0
             }`;
             document.getElementById("profile-pic").src =
               userData.profile_picture || "select.png";
+            document.getElementById("profile-pic-account").src = userData.profile_picture || "select.png";
             document.getElementById("banner-img").src =
               userData.banner || "select.png";
-            document.getElementById("profile-pic-account").src = userData.profile_picture || "select.png";
           });
         } else {
           console.log("No user is signed in");
@@ -482,94 +486,94 @@
         document.getElementById("nav-saved").classList.remove("active");
       });
 
-// Function to show saved products
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    let userUid = user.uid;
-    const savedProductsRef = ref(db, `users/${userUid}/saved_products`);
-    const savedProductsContainer = document.getElementById("saved-products-list");
+      // Function to show saved products
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          let userUid = user.uid;
+          const savedProductsRef = ref(db, `users/${userUid}/saved_products`);
+          const savedProductsContainer = document.getElementById("saved-products-list");
 
-    // Fetch saved products from Firebase
-    onValue(savedProductsRef, (snapshot) => {
-      savedProductsContainer.innerHTML = ""; // Clear the container
-      const savedProducts = snapshot.val();
-      if (savedProducts) {
-        // Loop through each saved product using its push ID
-        Object.keys(savedProducts).forEach((savedProductId) => {
-          const savedProduct = savedProducts[savedProductId]; // Get saved product details (e.g., product_id)
-          const productId = savedProduct.product_id; // Assuming product_id is stored under saved product details
+          // Fetch saved products from Firebase
+          onValue(savedProductsRef, (snapshot) => {
+            savedProductsContainer.innerHTML = ""; // Clear the container
+            const savedProducts = snapshot.val();
+            if (savedProducts) {
+              // Loop through each saved product using its push ID
+              Object.keys(savedProducts).forEach((savedProductId) => {
+                const savedProduct = savedProducts[savedProductId]; // Get saved product details (e.g., product_id)
+                const productId = savedProduct.product_id; // Assuming product_id is stored under saved product details
 
-          // Fetch the product details using the product ID
-          const productRef = ref(db, `products/${productId}`);
-          onValue(productRef, (productSnapshot) => {
-            const product = productSnapshot.val();
-            if (product) {
+                // Fetch the product details using the product ID
+                const productRef = ref(db, `products/${productId}`);
+                onValue(productRef, (productSnapshot) => {
+                  const product = productSnapshot.val();
+                  if (product) {
 
-              // Generate images HTML
-              let imagesHTML = "";
-              if (product.images && product.images.length > 0) {
-                imagesHTML = `<img src="${product.images[1]}" class="product_image" alt="${product.title}" />`;
-              } else {
-                imagesHTML = `<img src="/images/no-image.png" alt="No Image" />`; // Fallback if no image exists
-              }
+                    // Generate images HTML
+                    let imagesHTML = "";
+                    if (product.images && product.images.length > 0) {
+                      imagesHTML = `<img src="${product.images[1]}" class="product_image" alt="${product.title}" />`;
+                    } else {
+                      imagesHTML = `<img src="no-image.png" alt="No Image" />`; // Fallback if no image exists
+                    }
 
-              // Generate product card dynamically
-              const productsHTML = `
-                <div class="product_card" data-aos="zoom-in-up">
-                    <div class="product_image_container" onclick="handleProductClick('${productId}')">
-                        ${imagesHTML}
-                    </div>
-                    <div class="products_details_container">
-                        <p class="product_title">${product.title}</p>
-                        <div class="product_price_container">
-                            <p class="product_price">${product.currency} ${product.price}</p>
-                            <div class="discount_container">
-                                <p class="discount_amount">${product.discount_amount}</p>
-                                <p class="product_discount_percentage">-${product.discount_percentage}%</p>
-                            </div>
-                        </div>
-                        <div class="rating_and_share">
-                            <div class="product_rettings_container">
-                                <i id="star-1" class="fa-solid fa-star"></i>
-                                <i id="star-2" class="fa-solid fa-star"></i>
-                                <i id="star-3" class="fa-solid fa-star"></i>
-                                <i id="star-4" class="fa-solid fa-star"></i>
-                                <i id="star-5" class="fa-solid fa-star"></i>
-                                <p class="rettings">(0)</p>
-                            </div>
-                            <div class="share_container">
-                                <div class="dropdown">
-                                    <button class="dropbtn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                                    <div class="dropdown-content">
-                                        <a id="saveProduct_${productId}" onClick="saveButtonClick('${productId}')">
-                                            <i id="saveProductIcon" class="fa-regular fa-bookmark"></i>
-                                        </a>
-                                        <a onclick="handleProductClick('${productId}')">
-                                            <i class="fa-solid fa-cart-plus"></i>
-                                        </a>
-                                        <a onClick="shareButtonClick('${productId}', '${product.title}')">
-                                            <i class="fa-solid fa-share-from-square"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              `;
+                    // Generate product card dynamically
+                    const productsHTML = `
+                      <div class="product_card" data-aos="zoom-in-up">
+                          <div class="product_image_container" onclick="handleProductClick('${productId}')">
+                              ${imagesHTML}
+                          </div>
+                          <div class="products_details_container">
+                              <p class="product_title">${product.title}</p>
+                              <div class="product_price_container">
+                                  <p class="product_price">${product.currency} ${product.price}</p>
+                                  <div class="discount_container">
+                                      <p class="discount_amount">${product.discount_amount}</p>
+                                      <p class="product_discount_percentage">-${product.discount_percentage}%</p>
+                                  </div>
+                              </div>
+                              <div class="rating_and_share">
+                                  <div class="product_rettings_container">
+                                      <i id="star-1" class="fa-solid fa-star"></i>
+                                      <i id="star-2" class="fa-solid fa-star"></i>
+                                      <i id="star-3" class="fa-solid fa-star"></i>
+                                      <i id="star-4" class="fa-solid fa-star"></i>
+                                      <i id="star-5" class="fa-solid fa-star"></i>
+                                      <p class="rettings">(0)</p>
+                                  </div>
+                                  <div class="share_container">
+                                      <div class="dropdown">
+                                          <button class="dropbtn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                          <div class="dropdown-content">
+                                              <a id="saveProduct_${productId}" onClick="saveButtonClick('${productId}')">
+                                                  <i id="saveProductIcon" class="fa-regular fa-bookmark"></i>
+                                              </a>
+                                              <a onclick="handleProductClick('${productId}')">
+                                                  <i class="fa-solid fa-cart-plus"></i>
+                                              </a>
+                                              <a onClick="shareButtonClick('${productId}', '${product.title}')">
+                                                  <i class="fa-solid fa-share-from-square"></i>
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    `;
 
-              // Append the product card to the container
-              savedProductsContainer.innerHTML += productsHTML;
-              updateSaveIcons();
+                    // Append the product card to the container
+                    savedProductsContainer.innerHTML += productsHTML;
+                    updateSaveIcons();
+                  }
+                });
+              });
+            } else {
+              savedProductsContainer.innerHTML = "<p>No saved products found.</p>";
             }
           });
-        });
-      } else {
-        savedProductsContainer.innerHTML = "<p>No saved products found.</p>";
-      }
-    });
 
-              // Show user orders
+          // Show user orders
           if (user){
             const ordersRef = ref(db, `orders/${userUid}`);
             const ordersContainer = document.getElementById("orders-list-container");
@@ -611,14 +615,13 @@ onAuthStateChanged(auth, (user) => {
                     });
                   }
                 }
-              }else{
-                ordersContainer.innerHTML = `<p>No orders yet!</p>`;
+              }
             });
           }
-  }
-});
+        }
+      });
 
-            // Settings button click
+      // Settings button click
       document.getElementById("settings-btn").addEventListener("click", () => {
         document.querySelector(".settings_container").style.display = "block";
       });
